@@ -12,15 +12,17 @@ const Navbar = () => {
   };
 
   return (
-    <>
+    <section >
   <Header />
-    <nav className="bg-white border-b">
+
+    <nav className="bg-[#6CA0D1]">
+  <main className="container mx-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Left side - Logo */}
           <div className="flex-shrink-0">
             <Link href={'/'}>
-              <h1 className="text-sm lg:text-lg xl:text-xl md:text-md font-bold text-[#0D6DB7]">
+              <h1 className="text-sm lg:text-2xl xl:text-2xl md:text-md font-normal text-white">
                 Patient Management System
               </h1>
             </Link>
@@ -28,16 +30,16 @@ const Navbar = () => {
 
           {/* Right side - Menu for large screens */}
           <div className="hidden md:flex space-x-8">
-            <Link href={"/"} className="nav-item text-[#8DC63F] text-lg">
+            <Link href={"/"} className="nav-item text-[#fff] text-md">
               Home
             </Link>
-            <Link href={"/about"} className="nav-item text-[#0D6DB7] text-lg">
+            <Link href={"/about"} className="nav-item text-[#ffff] text-md">
               About
             </Link>
-            <Link href={"/contact"} className="nav-item text-[#0D6DB7] text-lg">
+            <Link href={"/contact"} className="nav-item text-[#ffff] text-md">
               Contact Us
             </Link>
-            <Link href={"/contact"} className="nav-item text-[#0D6DB7] text-lg">
+            <Link href={"/contact"} className="nav-item text-[#ffff] text-md">
               Contact Us
             </Link>
           </div>
@@ -66,19 +68,19 @@ const Navbar = () => {
         } transition-transform duration-300 ease-in-out w-64 bg-white shadow-lg p-5 z-20`}
       >
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-[#0D6DB7] text-xs font-bold">Patient Management System</h2>
+          <h2 className="text-[#black] text-xs font-bold">Patient Management System</h2>
           <FaTimes
-            className="text-2xl cursor-pointer text-[#0D6DB7]"
+            className="text-2xl cursor-pointer text-[#6CA0D1]"
             onClick={toggleSidebar}
           />
         </div>
-        <Link href={"/"} className="nav-item text-[#8DC63F] block mb-3" onClick={toggleSidebar}>
+        <Link href={"/"} className="nav-item text-[#6CA0D1] block mb-3" onClick={toggleSidebar}>
           Home
         </Link>
-        <Link href={"/about"} className="nav-item text-[#0D6DB7] block mb-3" onClick={toggleSidebar}>
+        <Link href={"/about"} className="nav-item text-[#000] block mb-3" onClick={toggleSidebar}>
           About
         </Link>
-        <Link href={"/contact"} className="nav-item text-[#0D6DB7] block mb-3" onClick={toggleSidebar}>
+        <Link href={"/contact"} className="nav-item text-[#000] block mb-3" onClick={toggleSidebar}>
           Contact Us
         </Link>
       </div>
@@ -90,8 +92,10 @@ const Navbar = () => {
           onClick={toggleSidebar}
         />
       )}
+  </main>
     </nav>
-    </>
+
+    </section>
   );
 };
 

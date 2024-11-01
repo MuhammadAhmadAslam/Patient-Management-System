@@ -1,9 +1,10 @@
-import Navbar from '../components/NavBar';
-import SecondSection from '../components/SecondSection';
-import ThirdHeroSection from '../components/ThirdHeroSection';
-import ShortBackgroundSection from '../components/ShortBackgroundSection';
-import PremiumDoctorsSection from '../components/PremiumDoctorsSection';
-import ShortBgSectionTwo from '../components/ShortBgSectionTwo';
+import Navbar from "@/Components/NavBar";
+import PremiumDoctorsSection from "@/Components/PremiumDoctorsSection";
+import SecondSection from "@/Components/SecondSection";
+import ShortBackgroundSection from "@/Components/ShortBackgroundSection";
+import ShortBgSectionTwo from "@/Components/ShortBgSectionTwo";
+import ThirdHeroSection from "@/Components/ThirdHeroSection";
+
 export default function Home() {
   return (
     <div className="">

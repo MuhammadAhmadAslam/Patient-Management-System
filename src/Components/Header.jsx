@@ -7,8 +7,8 @@ function Header() {
     <header className="h-[50px] bg-[#207DFF] flex justify-center items-center">
     <main className="container mx-auto flex justify-end md:justify-between items-center">
     <div className="md:flex justify-center items-center gap-4 hidden">
-              <p className="flex justify-center items-center gap-2 text-white font-medium text-sm"><IoCall className="text-white text-sm md:text-sm cursor-pointer" /> 0426845474</p>
-              <p className="flex justify-center items-center gap-2 text-white font-medium text-sm"><IoMdMail className="text-white text-sm md:text-sm cursor-pointer" /> youremail@gmail.com</p>
+              <p className="flex justify-center items-center gap-2 text-white font-medium text-[12px]"><IoCall className="text-white text-sm md:text-sm cursor-pointer" /> 0426845474</p>
+              <p className="flex justify-center items-center gap-2 text-white font-medium text-[12px]"><IoMdMail className="text-white text-sm md:text-sm cursor-pointer" /> youremail@gmail.com</p>
       </div>
 
         <div id="rightSide" className="flex justify-center items-center gap-2">

@@ -3,8 +3,10 @@ import { Button } from "./ui/button"
 
 export default function ShortBgSectionTwo() {
   return (
-    <section className="relative bg-blue-500 py-24">
+    <section className="relative bg-blue-500 py-24 bg-[url(https://preview.colorlib.com/theme/mediplus/images/bg_3.jpg.webp)] bg-center mb-20 bg-fixed">
       {/* Background overlay */}
+      <div className="">
+
       <div className="absolute inset-0 bg-blue-600/50" />
 
       <div className="container relative mx-auto px-4">
@@ -45,6 +47,8 @@ export default function ShortBgSectionTwo() {
           </div>
         </div>
       </div>
+      </div>
+
     </section>
   )
 }

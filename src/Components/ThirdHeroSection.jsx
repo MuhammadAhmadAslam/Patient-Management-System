@@ -1,5 +1,5 @@
 import { Stethoscope } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card , CardContent } from "./ui/card"
 import "../app/globals.css"
 export default function ThirdHeroSection() {
   const specialties = [

@@ -6,8 +6,8 @@ function HeroSection() {
     <div className="min-h-[80vh]">
       <section className="container flex justify-start items-center mx-auto flex-wrap">
         <div className="w-[100%] md:w-[60%] px-5">
-          <h1 className="font-bold text-2xl md:text-7xl  mt-[100px] text-[#207DFF]">Your Partner In</h1>
-          <h1 className="font-bold text-2xl md:text-7xl ">Health <span className="text-[#207DFF]">And Wellness</span></h1>
+          <h1 className="font-bold text-2xl md:text-7xl xl:text-8xl mt-[100px] text-[#207DFF]">Your Partner In</h1>
+          <h1 className="font-bold text-2xl md:text-7xl xl:text-8xl">Health <span className="text-[#207DFF]">And Wellness</span></h1>
           <p className="text-sm mt-6">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti
             perspiciatis, dolorem quo quaerat maxime placeat fuga eaque

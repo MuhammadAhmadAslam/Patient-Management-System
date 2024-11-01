@@ -4,7 +4,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import Link from "next/link";
 import Header from "./Header";
 import HeroSection from "./HeroSection";
-
+import "../app/globals.css";
 const Navbar = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
 
@@ -15,7 +15,7 @@ const Navbar = () => {
   return (
     <section >
     <Header />
-    <nav className="bg-[url(https://preview.colorlib.com/theme/mediplus/images/bg_3.jpg.webp)] bg-cover bg-center" >
+    <nav className="bg-fixed bg-no-repeat bg-[url(https://preview.colorlib.com/theme/mediplus/images/bg_3.jpg.webp)] bg-cover bg-center" >
     <div className="bg-[#E3E3E3]">
 
   <main className="container mx-auto">

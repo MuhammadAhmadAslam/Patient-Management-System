@@ -14,7 +14,33 @@ body {
     text-wrap: balance;
   }
 }
+@layer components {
+  .nav-item {
+    position: relative;
+    transition: color 0.5s;
+  }
 
+  .nav-item::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 0%;
+    background: #207DFF;
+    height: 2px;
+    transition: width 0.5s;
+  }
+
+  .nav-item:hover::after {
+    width: 100%;
+  }
+
+  .nav-item:hover {
+    color: #333;
+  }
+}
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -78,4 +104,16 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.group-hover {
+  transition: all 0.3s ease-in-out;
+}
+
+.group-hover:hover {
+  background-color: #3498db; /* bg-blue-500 */
+}
+
+.group-hover:hover * {
+  color: #ffffff; /* white */
 }

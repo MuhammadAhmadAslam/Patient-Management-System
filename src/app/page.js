@@ -8,7 +8,7 @@ import ThirdHeroSection from "@/Components/ThirdHeroSection";
 export default function Home() {
   return (
     <div className="">
-    <Navbar />
+    <Navbar isHeroSectionVisible={true} />
     <SecondSection />
     <ThirdHeroSection />
     <ShortBackgroundSection />

@@ -6,7 +6,7 @@ import Header from "./Header";
 import HeroSection from "./HeroSection";
 import "../app/globals.css";
 import { Button } from "./ui/button";
-const Navbar = ({isHeroSectionVisible}) => {
+const Navbar = ({isHeroSectionVisible }) => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
 
   const toggleSidebar = () => {
@@ -43,7 +43,7 @@ const Navbar = ({isHeroSectionVisible}) => {
                     Home
                   </Link>
                   <Link
-                    href={"/about"}
+                    href={"/doctors"}
                     className="nav-item text-[black] text-sm"
                   >
                     Doctors

@@ -117,3 +117,9 @@ body {
 .group-hover:hover * {
   color: #ffffff; /* white */
 }
+
+@media screen and (max-width: 700px) {
+    .search-bar:focus{
+        width: 100%;
+    }
+}

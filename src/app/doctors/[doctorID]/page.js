@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { Star, Phone, Mail, MapPin, Clock } from "lucide-react";
 import Navbar from "@/Components/NavBar";
-import { Calendar } from "@/components/ui/calendar";
 import Footer from "@/Components/Footer";
+import {Calendar} from "../../../Components/ui/calendar"
 export default function DoctorDetailPage({ params }) {
   const doctors = [
     {

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Button } from "./ui/button";
 import SearchInput from "./SerachBar";
 import Link from "next/link";
+import ShowDoctor from "./showDoctor";
 
 function DoctorPageDrDisplay() {
   const doctors = [
@@ -216,30 +217,9 @@ function DoctorPageDrDisplay() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12 container mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 mb-12 container mx-auto">
         {doctors.map((doctor, index) => (
-          <div
-            key={index}
-            className="flex flex-col items-center text-center border border-[#207DFF] pb-3 rounded-xl"
-          >
-            <div className="relative w-full h-[200px] mb-6">
-              <Image
-                src={doctor.image}
-                alt={doctor.name}
-                fill
-                className="object-cover rounded-lg"
-              />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">{doctor.name}</h3>
-            <p className="text-blue-500 text-sm font-medium tracking-wider mb-4">
-              {doctor.specialty}
-            </p>
-            <Link href={`/doctors/${doctor.id}`}>
-              <Button className="bg-blue-500 hover:bg-blue-600 text-white rounded-full px-4">
-                See Details About Doctor
-              </Button>
-            </Link>
-          </div>
+          <ShowDoctor key={index} doctor={doctor} />  
         ))}
       </div>
     </>

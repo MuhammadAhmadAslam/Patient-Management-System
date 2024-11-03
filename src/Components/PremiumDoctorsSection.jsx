@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
+import ShowDoctor from "./showDoctor";
 export default function PremiumDoctorsSection() {
   const doctors = [
     {
@@ -18,8 +20,8 @@ export default function PremiumDoctorsSection() {
       experience: "15 years",
       reviews: [
         { rating: 5, comment: "Excellent doctor! Highly recommend." },
-        { rating: 4, comment: "Very attentive and knowledgeable." }
-      ]
+        { rating: 4, comment: "Very attentive and knowledgeable." },
+      ],
     },
     {
       id: 2,
@@ -36,8 +38,8 @@ export default function PremiumDoctorsSection() {
       experience: "10 years",
       reviews: [
         { rating: 4, comment: "Great results! Very satisfied." },
-        { rating: 5, comment: "Best dermatologist I have visited." }
-      ]
+        { rating: 5, comment: "Best dermatologist I have visited." },
+      ],
     },
     {
       id: 3,
@@ -54,8 +56,8 @@ export default function PremiumDoctorsSection() {
       experience: "12 years",
       reviews: [
         { rating: 5, comment: "Amazing surgeon! Changed my life." },
-        { rating: 4, comment: "Professional and skilled." }
-      ]
+        { rating: 4, comment: "Professional and skilled." },
+      ],
     },
     {
       id: 4,
@@ -72,8 +74,8 @@ export default function PremiumDoctorsSection() {
       experience: "8 years",
       reviews: [
         { rating: 5, comment: "Fantastic with kids! Highly recommend." },
-        { rating: 5, comment: "Always takes the time to listen." }
-      ]
+        { rating: 5, comment: "Always takes the time to listen." },
+      ],
     },
     {
       id: 5,
@@ -90,8 +92,8 @@ export default function PremiumDoctorsSection() {
       experience: "20 years",
       reviews: [
         { rating: 5, comment: "Incredibly knowledgeable." },
-        { rating: 4, comment: "Takes time to explain everything." }
-      ]
+        { rating: 4, comment: "Takes time to explain everything." },
+      ],
     },
     {
       id: 6,
@@ -108,8 +110,8 @@ export default function PremiumDoctorsSection() {
       experience: "10 years",
       reviews: [
         { rating: 4, comment: "Great care and attention to detail." },
-        { rating: 5, comment: "Helped me a lot with my condition." }
-      ]
+        { rating: 5, comment: "Helped me a lot with my condition." },
+      ],
     },
     {
       id: 7,
@@ -126,8 +128,8 @@ export default function PremiumDoctorsSection() {
       experience: "15 years",
       reviews: [
         { rating: 5, comment: "Life-changing doctor!" },
-        { rating: 4, comment: "Very understanding and supportive." }
-      ]
+        { rating: 4, comment: "Very understanding and supportive." },
+      ],
     },
     {
       id: 8,
@@ -144,8 +146,8 @@ export default function PremiumDoctorsSection() {
       experience: "12 years",
       reviews: [
         { rating: 5, comment: "Best eye doctor ever!" },
-        { rating: 4, comment: "Very thorough and friendly." }
-      ]
+        { rating: 4, comment: "Very thorough and friendly." },
+      ],
     },
     {
       id: 9,
@@ -162,8 +164,8 @@ export default function PremiumDoctorsSection() {
       experience: "18 years",
       reviews: [
         { rating: 5, comment: "Amazing support during tough times." },
-        { rating: 4, comment: "Listens and cares genuinely." }
-      ]
+        { rating: 4, comment: "Listens and cares genuinely." },
+      ],
     },
     {
       id: 10,
@@ -180,11 +182,10 @@ export default function PremiumDoctorsSection() {
       experience: "14 years",
       reviews: [
         { rating: 5, comment: "Very supportive and understanding." },
-        { rating: 4, comment: "Highly skilled and professional." }
-      ]
-    }
+        { rating: 4, comment: "Highly skilled and professional." },
+      ],
+    },
   ];
-  
 
   return (
     <div className="container mx-auto px-4 py-16">
@@ -197,27 +198,9 @@ export default function PremiumDoctorsSection() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
         {doctors.slice(0, 6).map((doctor, index) => (
-          <div key={index} className="flex flex-col items-center text-center">
-            <div className="relative w-full h-[200px] mb-6">
-              <Image
-                src={doctor.image}
-                alt={doctor.name}
-                fill
-                className="object-cover rounded-lg"
-              />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">{doctor.name}</h3>
-            <p className="text-blue-500 text-sm font-medium tracking-wider mb-4">
-              {doctor.specialty}
-            </p>
-            <Link href={`/doctors/${doctor.id}`}>
-              <Button className="bg-blue-500 hover:bg-blue-600 text-white rounded-full px-4">
-                See Details About Doctor
-              </Button>
-            </Link>
-          </div>
+          <ShowDoctor key={index} doctor={doctor} />
         ))}
       </div>
 

@@ -10,7 +10,7 @@ export default function NotFound() {
         <h1 className="text-[#207DFF] text-9xl font-bold">404</h1>
         <h2 className="text-3xl font-semibold text-gray-800">Oops! Page not found.</h2>
         <p className="text-gray-600 max-w-md mx-auto">
-          It looks like the page you're looking for doesn't exist.
+          It looks like the page you are looking for doesnot exist.
         </p>
         <div className="space-y-4">
           <Button asChild className="bg-[#207DFF] hover:bg-[#1a6ad4] text-white font-semibold py-2 px-6 rounded-full transition-colors duration-300">

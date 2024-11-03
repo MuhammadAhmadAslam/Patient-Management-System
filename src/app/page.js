@@ -1,3 +1,4 @@
+import Footer from "@/Components/Footer";
 import Navbar from "@/Components/NavBar";
 import PremiumDoctorsSection from "@/Components/PremiumDoctorsSection";
 import SecondSection from "@/Components/SecondSection";
@@ -14,6 +15,7 @@ export default function Home() {
     <ShortBackgroundSection />
     <PremiumDoctorsSection />
     <ShortBgSectionTwo />
+    <Footer />
     </div>
   );
 }

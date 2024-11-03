@@ -3,6 +3,7 @@ import Image from "next/image";
 import React from "react";
 import { Button } from "@/Components/ui/button";
 import DoctorPageDrDisplay from "@/Components/DoctorPageDrDisplay";
+import Footer from "@/Components/Footer";
 function DoctorsPage() {
   let doctors = [
     {
@@ -65,6 +66,7 @@ function DoctorsPage() {
       </section>
 
       <DoctorPageDrDisplay />
+      <Footer />
     </>
   );
 }

@@ -1,7 +1,9 @@
-import Image from 'next/image'
-import { Star, Phone, Mail, MapPin, Calendar, Clock } from 'lucide-react'
-import Navbar from '@/Components/NavBar'
-export default function DoctorDetailPage({params}) {
+import Image from "next/image";
+import { Star, Phone, Mail, MapPin, Clock } from "lucide-react";
+import Navbar from "@/Components/NavBar";
+import { Calendar } from "@/components/ui/calendar";
+import Footer from "@/Components/Footer";
+export default function DoctorDetailPage({ params }) {
   const doctors = [
     {
       id: 1,
@@ -18,8 +20,8 @@ export default function DoctorDetailPage({params}) {
       experience: "15 years",
       reviews: [
         { rating: 5, comment: "Excellent doctor! Highly recommend." },
-        { rating: 4, comment: "Very attentive and knowledgeable." }
-      ]
+        { rating: 4, comment: "Very attentive and knowledgeable." },
+      ],
     },
     {
       id: 2,
@@ -36,8 +38,8 @@ export default function DoctorDetailPage({params}) {
       experience: "10 years",
       reviews: [
         { rating: 4, comment: "Great results! Very satisfied." },
-        { rating: 5, comment: "Best dermatologist I have visited." }
-      ]
+        { rating: 5, comment: "Best dermatologist I have visited." },
+      ],
     },
     {
       id: 3,
@@ -54,8 +56,8 @@ export default function DoctorDetailPage({params}) {
       experience: "12 years",
       reviews: [
         { rating: 5, comment: "Amazing surgeon! Changed my life." },
-        { rating: 4, comment: "Professional and skilled." }
-      ]
+        { rating: 4, comment: "Professional and skilled." },
+      ],
     },
     {
       id: 4,
@@ -72,8 +74,8 @@ export default function DoctorDetailPage({params}) {
       experience: "8 years",
       reviews: [
         { rating: 5, comment: "Fantastic with kids! Highly recommend." },
-        { rating: 5, comment: "Always takes the time to listen." }
-      ]
+        { rating: 5, comment: "Always takes the time to listen." },
+      ],
     },
     {
       id: 5,
@@ -90,8 +92,8 @@ export default function DoctorDetailPage({params}) {
       experience: "20 years",
       reviews: [
         { rating: 5, comment: "Incredibly knowledgeable." },
-        { rating: 4, comment: "Takes time to explain everything." }
-      ]
+        { rating: 4, comment: "Takes time to explain everything." },
+      ],
     },
     {
       id: 6,
@@ -108,8 +110,8 @@ export default function DoctorDetailPage({params}) {
       experience: "10 years",
       reviews: [
         { rating: 4, comment: "Great care and attention to detail." },
-        { rating: 5, comment: "Helped me a lot with my condition." }
-      ]
+        { rating: 5, comment: "Helped me a lot with my condition." },
+      ],
     },
     {
       id: 7,
@@ -126,8 +128,8 @@ export default function DoctorDetailPage({params}) {
       experience: "15 years",
       reviews: [
         { rating: 5, comment: "Life-changing doctor!" },
-        { rating: 4, comment: "Very understanding and supportive." }
-      ]
+        { rating: 4, comment: "Very understanding and supportive." },
+      ],
     },
     {
       id: 8,
@@ -144,8 +146,8 @@ export default function DoctorDetailPage({params}) {
       experience: "12 years",
       reviews: [
         { rating: 5, comment: "Best eye doctor ever!" },
-        { rating: 4, comment: "Very thorough and friendly." }
-      ]
+        { rating: 4, comment: "Very thorough and friendly." },
+      ],
     },
     {
       id: 9,
@@ -162,8 +164,8 @@ export default function DoctorDetailPage({params}) {
       experience: "18 years",
       reviews: [
         { rating: 5, comment: "Amazing support during tough times." },
-        { rating: 4, comment: "Listens and cares genuinely." }
-      ]
+        { rating: 4, comment: "Listens and cares genuinely." },
+      ],
     },
     {
       id: 10,
@@ -180,13 +182,12 @@ export default function DoctorDetailPage({params}) {
       experience: "14 years",
       reviews: [
         { rating: 5, comment: "Very supportive and understanding." },
-        { rating: 4, comment: "Highly skilled and professional." }
-      ]
-    }
+        { rating: 4, comment: "Highly skilled and professional." },
+      ],
+    },
   ];
-  
 
-  console.log(params , "params of doctor id");
+  console.log(params, "params of doctor id");
   let doctor = doctors.filter((doctor) => doctor.id == params.doctorID)[0];
   return (
     <div className="min-h-screen bg-gray-50">
@@ -205,7 +206,9 @@ export default function DoctorDetailPage({params}) {
               />
             </div>
             <div className="mt-4 md:mt-0 md:ml-6">
-              <h1 className="text-3xl font-bold text-[#207DFF]">{doctor.name}</h1>
+              <h1 className="text-3xl font-bold text-[#207DFF]">
+                {doctor.name}
+              </h1>
               <p className="mt-1 text-xl text-gray-600">{doctor.specialty}</p>
               <div className="mt-2 flex items-center">
                 <div className="flex text-[#F87171]">
@@ -213,7 +216,9 @@ export default function DoctorDetailPage({params}) {
                     <Star key={i} className="h-5 w-5 fill-current" />
                   ))}
                 </div>
-                <span className="ml-2 text-sm text-gray-600">4.9 {doctor.reviews.length}</span>
+                <span className="ml-2 text-sm text-gray-600">
+                  4.9 {doctor.reviews.length}
+                </span>
               </div>
               <p className="mt-1 text-sm text-gray-600">{doctor.experience}</p>
             </div>
@@ -226,10 +231,10 @@ export default function DoctorDetailPage({params}) {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 md:grid-cols-2">
             <div>
-              <h2 className="text-2xl font-semibold text-gray-900">About Dr. {doctor.name}</h2>
-              <p className="mt-4 text-gray-600">
-                {doctor.bio}
-              </p>
+              <h2 className="text-2xl font-semibold text-gray-900">
+                About Dr. {doctor.name}
+              </h2>
+              <p className="mt-4 text-gray-600">{doctor.bio}</p>
               <div className="mt-6 space-y-4">
                 <div className="flex items-center">
                   <Phone className="h-5 w-5 text-[#207DFF]" />
@@ -248,16 +253,17 @@ export default function DoctorDetailPage({params}) {
 
             {/* Appointment Booking Section */}
             <div className="rounded-lg bg-blue-50 p-6">
-              <h2 className="text-2xl font-semibold text-gray-900">Book an Appointment</h2>
-              <div className="mt-4 flex items-center">
-                <Calendar className="h-5 w-5 text-[#207DFF]" />
-                <input
-                  type="date"
-                  className="ml-2 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+              <h2 className="text-2xl font-semibold text-gray-900">
+                Book an Appointment
+              </h2>
+              <div className="mt-4 flex items-center justify-center">
+                <Calendar
+                  mode="single"
+                  className="rounded-md border"
                 />
               </div>
               <div className="mt-4 grid grid-cols-3 gap-2">
-                {['9:00 AM', '10:00 AM', '11:00 AM', '1:00 PM', '2:00 PM', '3:00 PM'].map((time) => (
+                {doctor.appointmentTime.map((time) => (
                   <button
                     key={time}
                     className="rounded-md bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-[#207DFF] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#207DFF] focus:ring-offset-2"
@@ -274,30 +280,40 @@ export default function DoctorDetailPage({params}) {
       {/* Patient Reviews Section */}
       <section className="bg-white py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-semibold text-gray-900">Patient Reviews</h2>
+          <h2 className="text-2xl font-semibold text-gray-900">
+            Patient Reviews
+          </h2>
           <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {[1, 2, 3].map((review) => (
+            {doctor.reviews.map((review) => (
               <div key={review} className="rounded-lg border p-4 shadow-sm">
                 <div className="flex items-center">
                   <div className="flex text-[#F87171]">
-                    {[...Array(5)].map((_, i) => (
+                    {[...Array(review.rating)].map((_, i) => (
                       <Star key={i} className="h-4 w-4 fill-current" />
                     ))}
                   </div>
-                  <span className="ml-2 text-sm font-medium text-gray-600">5.0</span>
+                  <span className="ml-2 text-sm font-medium text-gray-600">
+                    {review.rating}
+                  </span>
                 </div>
                 <p className="mt-2 text-sm text-gray-600">
-                  &quot;Dr. Smith is an excellent cardiologist. She took the time to explain everything clearly and made me feel at ease.&quot;
+                  {review.comment}
                 </p>
-                <p className="mt-2 text-sm font-medium text-gray-900">- John Doe</p>
+                <p className="mt-2 text-sm font-medium text-gray-900">
+                  - John Doe
+                </p>
               </div>
             ))}
           </div>
-          <div className="mt-8 text-center">
-            <button className="rounded-md bg-[#207DFF] px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-              See More Reviews
-            </button>
-          </div>
+          {
+            doctor.reviews.length > 3 && (
+              <div className="mt-8 text-center">
+                <button className="rounded-md bg-[#207DFF] px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                  See More Reviews
+                </button>
+              </div>
+            ) 
+          }
         </div>
       </section>
 
@@ -307,6 +323,7 @@ export default function DoctorDetailPage({params}) {
           Book Appointment
         </button>
       </div>
+      <Footer />
     </div>
-  )
+  );
 }

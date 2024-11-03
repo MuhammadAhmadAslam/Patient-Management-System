@@ -9,7 +9,7 @@ const nextConfig = {
         },
         {
           protocol: "https",
-          hostname: "randomuser.me",
+          hostname: "img.freepik.com",
           pathname: "/**",
         },
       ],

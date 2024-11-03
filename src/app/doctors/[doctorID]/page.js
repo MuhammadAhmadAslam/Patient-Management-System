@@ -190,7 +190,7 @@ export default function DoctorDetailPage({params}) {
   let doctor = doctors.filter((doctor) => doctor.id == params.doctorID)[0];
   return (
     <div className="min-h-screen bg-gray-50">
-    <Navbar isheroSectionVisible={false} />
+      <Navbar isheroSectionVisible={false} />
       {/* Hero Section */}
       <section className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-8 sm:py-12 sm:px-6 lg:px-8">
@@ -287,8 +287,7 @@ export default function DoctorDetailPage({params}) {
                   <span className="ml-2 text-sm font-medium text-gray-600">5.0</span>
                 </div>
                 <p className="mt-2 text-sm text-gray-600">
-                  "Dr. Smith is an excellent cardiologist. She took the time to explain everything clearly and made me
-                  feel at ease."
+                  &quot;Dr. Smith is an excellent cardiologist. She took the time to explain everything clearly and made me feel at ease.&quot;
                 </p>
                 <p className="mt-2 text-sm font-medium text-gray-900">- John Doe</p>
               </div>

@@ -57,7 +57,7 @@ function DoctorsPage() {
             At our clinic, we believe in a personalized approach to care. Our
             dedicated team of doctors combines expertise with compassion,
             ensuring you receive the highest quality of care tailored to your
-            unique needs. Your health journey is our priority, and we're here to
+            unique needs. Your health journey is our priority, and we are here to
             support you every step of the way—because you deserve more than just
             treatment; you deserve care that feels like family.
           </p>

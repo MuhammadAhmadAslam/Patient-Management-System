@@ -170,14 +170,15 @@ import {
 import Header from "./Header";
 import { SlLogout } from "react-icons/sl";
 import HeroSection from "./HeroSection";
-export default function Navbar({ isHeroSectionVisible }) {
+import { auth } from "auth";
+export default function Navbar({ isHeroSectionVisible , isLogin}) {
   const [sidebarVisible, setSidebarVisible] = useState(false);
 
   const handleSidebarToggle = () => {
     setSidebarVisible(!sidebarVisible);
   };
 
-  const isLogin = true;
+
   return (
     <section className="relative">
     <Header />

@@ -1,8 +1,15 @@
+"use client";
 import React from "react";
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { IoCall } from "react-icons/io5";
 import { IoMdMail } from "react-icons/io";
-function Header() {
+
+
+ function Header() {
+
+  
+  
+
   return (
     <header className="h-[50px] bg-[#207DFF] flex justify-center items-center">
     <main className="container mx-auto flex justify-end md:justify-between items-center">

@@ -5,11 +5,14 @@ import SecondSection from "@/Components/SecondSection";
 import ShortBackgroundSection from "@/Components/ShortBackgroundSection";
 import ShortBgSectionTwo from "@/Components/ShortBgSectionTwo";
 import ThirdHeroSection from "@/Components/ThirdHeroSection";
+import { auth } from "auth";
+export default async function Home() {
 
-export default function Home() {
+  let session = await auth()
+  console.log("app session" , session);
   return (
     <div className="">
-    <Navbar isHeroSectionVisible={true}  />
+    <Navbar isHeroSectionVisible={true} isLogin={session}  />
     <SecondSection />
     <ThirdHeroSection />
     <ShortBackgroundSection />

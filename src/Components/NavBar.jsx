@@ -170,8 +170,9 @@ import {
 import Header from "./Header";
 import { SlLogout } from "react-icons/sl";
 import HeroSection from "./HeroSection";
-import { auth } from "auth";
-export default function Navbar({ isHeroSectionVisible , isLogin}) {
+import { auth, signOut } from "auth";
+import LogoutDropDown from "./LogoutDropDown";
+export default function Navbar({ isHeroSectionVisible, isLogin }) {
   const [sidebarVisible, setSidebarVisible] = useState(false);
 
   const handleSidebarToggle = () => {
@@ -181,121 +182,123 @@ export default function Navbar({ isHeroSectionVisible , isLogin}) {
 
   return (
     <section className="relative">
-    <Header />
-    <nav className="bg-fixed bg-no-repeat bg-[url(https://preview.colorlib.com/theme/mediplus/images/bg_3.jpg.webp)] bg-cover bg-center">
-      <div className="bg-[#E3E3E3]/90 backdrop-blur-sm">
-        <main className="container mx-auto">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              {/* Left side - Logo */}
-              <div className="flex-shrink-0">
-                <Link href="/">
-                  <Image
-                    src="https://img.freepik.com/free-vector/realistic-world-health-day-illustration-with-planet-stethoscope_23-2148864737.jpg"
-                    alt="Logo"
-                    width={50}
-                    height={50}
-                    className="rounded-full"
-                  />
-                </Link>
-              </div>
-  
-              {/* Right side - Menu for large screens */}
-              <div className="hidden md:flex items-center space-x-4">
-                <Link href="/" className="nav-item text-black text-sm hover:text-[#207DFF] transition-colors">Home</Link>
-                <Link href="/doctors" className="nav-item text-black text-sm hover:text-[#207DFF] transition-colors">Doctors</Link>
-                <Link href="/about" className="nav-item text-black text-sm hover:text-[#207DFF] transition-colors">About Us</Link>
-                <Link href="/contact" className="nav-item text-black text-sm hover:text-[#207DFF] transition-colors">Contact Us</Link>
-  
-                {/* Book Appointment and Search Icon */}
-                <div className="flex items-center space-x-4">
-                  {isLogin ? (
-                    <Button asChild className="bg-[#207DFF] hover:bg-[#1a6ad4] text-white">
-                      <Link href="/appointment">Book An Appointment</Link>
-                    </Button>
-                  ) : (
-                    <Link href="/login" className="bg-[#207DFF] hover:bg-[#1a6ad4] rounded-lg px-6 py-1 text-white">Login</Link>
-                  )}
+      <Header />
+      <nav className="bg-fixed bg-no-repeat bg-[url(https://preview.colorlib.com/theme/mediplus/images/bg_3.jpg.webp)] bg-cover bg-center">
+        <div className="bg-[#E3E3E3]/90 backdrop-blur-sm">
+          <main className="container mx-auto">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex justify-between items-center h-16">
+                {/* Left side - Logo */}
+                <div className="flex-shrink-0">
+                  <Link href="/">
+                    <Image
+                      src="https://img.freepik.com/free-vector/realistic-world-health-day-illustration-with-planet-stethoscope_23-2148864737.jpg"
+                      alt="Logo"
+                      width={50}
+                      height={50}
+                      className="rounded-full"
+                    />
+                  </Link>
                 </div>
-  
-                {/* User Icon and Dropdown */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <FaUser className="h-5 w-5" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem>
-                      <Link href="/account" className="flex justify-center items-center gap-3"><FaCircleUser />My Account</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="/appointments" className="flex justify-center items-center gap-3"><FaCalendar />My Appointments</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="/logout" className="flex justify-center items-center gap-3"><SlLogout /> Logout</Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-  
-              {/* Hamburger Menu for small/medium screens */}
-              <div className="md:hidden flex items-center">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <FaUser className="h-5 w-5" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem>
-                      <Link href="/account" className="flex justify-center items-center gap-3"><FaCircleUser />My Account</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="/appointments" className="flex justify-center items-center gap-3"><FaCalendar />My Appointments</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href="/logout" className="flex justify-center items-center gap-3"><SlLogout /> Logout</Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-  
-                {/* Sheet (side drawer) for mobile menu */}
-                <Sheet open={sidebarVisible} onOpenChange={handleSidebarToggle}>
-                  <SheetTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <FaBars className="h-5 w-5" />
-                    </Button>
-                  </SheetTrigger>
-                  <SheetContent side="right" className="w-64 bg-white shadow-lg p-5">
-                    <div className="flex justify-between items-center mb-4">
-                      <h2 className="text-black text-sm font-bold">Patient Management System</h2>
-                    </div>
-                    <div className="space-y-3">
-                      <Link href="/" className="nav-item text-[#6CA0D1] block" onClick={handleSidebarToggle}>Home</Link>
-                      <Link href="/doctors" className="nav-item text-black block" onClick={handleSidebarToggle}>Doctors</Link>
-                      <Link href="/about" className="nav-item text-black block" onClick={handleSidebarToggle}>About Us</Link>
-                      <Link href="/contact" className="nav-item text-black block" onClick={handleSidebarToggle}>Contact Us</Link>
-                      {isLogin ? (
-                        <>
-                          <Link href="/account" className="nav-item text-black block" onClick={handleSidebarToggle}>My Account</Link>
-                          <Link href="/appointments" className="nav-item text-black block" onClick={handleSidebarToggle}>My Appointments</Link>
-                          <Link href="/logout" className="nav-item text-black block" onClick={handleSidebarToggle}>Logout</Link>
-                        </>
-                      ) : (
-                        <Link href="/login" className="nav-item text-black block" onClick={handleSidebarToggle}>Login</Link>
-                      )}
-                    </div>
-                  </SheetContent>
-                </Sheet>
+
+                {/* Right side - Menu for large screens */}
+                <div className="hidden md:flex items-center space-x-4">
+                  <Link href="/" className="nav-item text-black text-sm hover:text-[#207DFF] transition-colors">Home</Link>
+                  <Link href="/doctors" className="nav-item text-black text-sm hover:text-[#207DFF] transition-colors">Doctors</Link>
+                  <Link href="/about" className="nav-item text-black text-sm hover:text-[#207DFF] transition-colors">About Us</Link>
+                  <Link href="/contact" className="nav-item text-black text-sm hover:text-[#207DFF] transition-colors">Contact Us</Link>
+
+                  {/* Book Appointment and Search Icon */}
+                  <div className="flex items-center space-x-4">
+                    {isLogin ? (
+                      <Button asChild className="bg-[#207DFF] hover:bg-[#1a6ad4] text-white">
+                        <Link href="/doctors">Book An Appointment</Link>
+                      </Button>
+                    ) : (
+                      <Link href="/login" className="bg-[#207DFF] hover:bg-[#1a6ad4] rounded-lg px-6 py-1 text-white">Login</Link>
+                    )}
+                  </div>
+
+                  {/* User Icon and Dropdown */}
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon">
+                        <FaUser className="h-5 w-5" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem>
+                        <Link href="/account" className="flex justify-center items-center gap-3"><FaCircleUser />My Account</Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link href="/doctors" className="flex justify-center items-center gap-3"><FaCalendar />My Appointments</Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <LogoutDropDown />
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+
+                {/* Hamburger Menu for small/medium screens */}
+                <div className="md:hidden flex items-center">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon">
+                        <FaUser className="h-5 w-5" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem>
+                        <Link href="/account" className="flex justify-center items-center gap-3"><FaCircleUser />My Account</Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link href="/doctors" className="flex justify-center items-center gap-3"><FaCalendar />My Appointments</Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                       <LogoutDropDown />
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+
+                  {/* Sheet (side drawer) for mobile menu */}
+                  <Sheet open={sidebarVisible} onOpenChange={handleSidebarToggle}>
+                    <SheetTrigger asChild>
+                      <Button variant="ghost" size="icon">
+                        <FaBars className="h-5 w-5" />
+                      </Button>
+                    </SheetTrigger>
+                    <SheetContent side="right" className="w-64 bg-white shadow-lg p-5">
+                      <div className="flex justify-between items-center mb-4">
+                        <h2 className="text-black text-sm font-bold">Patient Management System</h2>
+                      </div>
+                      <div className="space-y-3">
+                        <Link href="/" className="nav-item text-[#6CA0D1] block" onClick={handleSidebarToggle}>Home</Link>
+                        <Link href="/doctors" className="nav-item text-black block" onClick={handleSidebarToggle}>Doctors</Link>
+                        <Link href="/about" className="nav-item text-black block" onClick={handleSidebarToggle}>About Us</Link>
+                        <Link href="/contact" className="nav-item text-black block" onClick={handleSidebarToggle}>Contact Us</Link>
+                        {isLogin ? (
+                          <>
+                            <Link href="/account" className="nav-item text-black block" onClick={handleSidebarToggle}>My Account</Link>
+                            <Link href="/doctors" className="nav-item text-black block" onClick={handleSidebarToggle}>My Appointments</Link>
+                            <form action={async () => { await signOut() }}>
+                              <button>Logout</button>
+                            </form>
+                          </>
+                        ) : (
+                          <Link href="/login" className="nav-item text-black block" onClick={handleSidebarToggle}>Login</Link>
+                        )}
+                      </div>
+                    </SheetContent>
+                  </Sheet>
+                </div>
               </div>
             </div>
-          </div>
-        </main>
-      </div>
-      {isHeroSectionVisible && <HeroSection />}
-    </nav>
-  </section>
-  
+          </main>
+        </div>
+        {isHeroSectionVisible && <HeroSection />}
+      </nav >
+    </section >
+
   );
 }

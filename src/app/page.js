@@ -7,18 +7,22 @@ import ShortBgSectionTwo from "@/Components/ShortBgSectionTwo";
 import ThirdHeroSection from "@/Components/ThirdHeroSection";
 import { auth } from "auth";
 export default async function Home() {
-
-  let session = await auth()
-  console.log("app session" , session);
+  let session;
+  try {
+    session = await auth();
+    console.log(session, "server-side session");
+  } catch (error) {
+    console.error("Error fetching session:", error);
+  }
   return (
     <div className="">
-    <Navbar isHeroSectionVisible={true} isLogin={session}  />
-    <SecondSection />
-    <ThirdHeroSection />
-    <ShortBackgroundSection />
-    <PremiumDoctorsSection />
-    <ShortBgSectionTwo />
-    <Footer />
+      <Navbar isHeroSectionVisible={true} session={session} />
+      <SecondSection />
+      <ThirdHeroSection />
+      <ShortBackgroundSection />
+      <PremiumDoctorsSection />
+      <ShortBgSectionTwo />
+      <Footer />
     </div>
   );
 }

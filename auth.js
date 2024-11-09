@@ -30,21 +30,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         profileImage : profile.picture,
        }
        let user = await handleLogin(userObj) 
-       return user // Do different verification for other providers that don't have `email_verified`
-       
+       return {user} // Do different verification for other providers that don't have `email_verified` 
       }
     },
-    jwt({ token, user }) {
+    async jwt({ token }) {
       console.log(token , 'tokien in jwt');
-      console.log(user , 'user in jwt');
-      
-      if (user) { // User is available during sign-in
-        token.id = user.id
-      }
+      let userFromDB = await handleLogin(token)
+      console.log(userFromDB , "user from DB");
+      token.role = userFromDB.role
+      token._id = userFromDB._id
       return token
     },
     session({ session, token }) {
-      session.user.id = token.id
+      session.user._id = token._id;
+      session.user.role = token.role;
+      console.log(session , "session in session fn");
+      
       return session
     },
   },

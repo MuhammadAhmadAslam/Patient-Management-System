@@ -5,6 +5,7 @@ import SecondSection from "@/Components/SecondSection";
 import ShortBackgroundSection from "@/Components/ShortBackgroundSection";
 import ShortBgSectionTwo from "@/Components/ShortBgSectionTwo";
 import ThirdHeroSection from "@/Components/ThirdHeroSection";
+import WebPageLayout from "@/Components/WebPageLayout";
 import { auth } from "auth";
 export default async function Home() {
   let session;
@@ -15,14 +16,12 @@ export default async function Home() {
     console.error("Error fetching session:", error);
   }
   return (
-    <div className="">
-      <Navbar isHeroSectionVisible={true} session={session} />
+    <WebPageLayout isHeroSectionVisible={true} className="">
       <SecondSection />
       <ThirdHeroSection />
       <ShortBackgroundSection />
       <PremiumDoctorsSection />
       <ShortBgSectionTwo />
-      <Footer />
-    </div>
+    </WebPageLayout>
   );
 }

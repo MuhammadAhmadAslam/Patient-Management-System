@@ -4,6 +4,7 @@ import React from "react";
 import { Button } from "@/Components/ui/button";
 import DoctorPageDrDisplay from "@/Components/DoctorPageDrDisplay";
 import Footer from "@/Components/Footer";
+import WebPageLayout from "@/Components/WebPageLayout";
 function DoctorsPage() {
   let doctors = [
     {
@@ -48,8 +49,7 @@ function DoctorsPage() {
     },
   ];
   return (
-    <>
-      <Navbar isHeroSectionVisible={false} />
+    <WebPageLayout isHeroSectionVisible={false} >
       <section className="min-h-[35vh] flex justify-center items-center relative bg-[url(https://preview.colorlib.com/theme/mediplus/images/bg_1.jpg)] object-cover bg-center  bg-fixed">
         <div className="absolute bg-[#0000002c] inset-0"></div>
         <div className="flex justify-center items-center h-full flex-col container mx-auto">
@@ -66,8 +66,7 @@ function DoctorsPage() {
       </section>
 
       <DoctorPageDrDisplay />
-      <Footer />
-    </>
+    </WebPageLayout>
   );
 }
 

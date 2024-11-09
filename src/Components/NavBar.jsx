@@ -8,11 +8,14 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "./ui/dropdown-menu";
+import { MdOutlineEventAvailable } from 'react-icons/md';
+import { FaUserDoctor } from "react-icons/fa6";
 import Header from "./Header";
 import HeroSection from "./HeroSection";
 import { signOut } from "auth";
-import { FaBars, FaCalendar, FaRoute, FaUser, FaUserCircle } from "react-icons/fa";
-
+import { FaBars, FaCalendar, FaHome, FaRoute, FaUser, FaUserCircle } from "react-icons/fa";
+import { MdContactSupport } from "react-icons/md";
+import { CiLogout } from "react-icons/ci";
 export default function Navbar({ isHeroSectionVisible, session }) {
   return (
     <section className="relative">
@@ -68,8 +71,8 @@ export default function Navbar({ isHeroSectionVisible, session }) {
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <div variant="ghost">
-                        {session?.image ? (
-                          <img src={session.image} className="w-[60px] h-[60px] rounded-full" />
+                        {session?.user?.image ? (
+                          <img src={session?.user?.image} alt={session?.user?.name} className="h-9 border border-black rounded-full" />
                         ) : (
                           <FaUserCircle className="text-3xl border h-[60px]" />
                         )}
@@ -77,7 +80,7 @@ export default function Navbar({ isHeroSectionVisible, session }) {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem>
-                        <Link href="/account" className="flex justify-center items-center gap-3">
+                        <Link href="/patient-profile" className="flex justify-center items-center gap-3">
                           <FaUser  />
                           My Account
                         </Link>
@@ -96,7 +99,7 @@ export default function Navbar({ isHeroSectionVisible, session }) {
                           }}
                         >
                           <button type="submit" className="flex justify-center items-center gap-3">
-                            <FaRoute/> Logout
+                            <CiLogout/> Logout
                           </button>
                         </form>
                       </DropdownMenuItem>
@@ -113,13 +116,21 @@ export default function Navbar({ isHeroSectionVisible, session }) {
                   {session && (
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
+                      {
+                        session?.user?.image ? (
+                          <img src={session?.user?.image} alt={session?.user?.name} className="h-9 border border-black rounded-full" />
+                          ) : (
                         <Button variant="ghost" size="icon">
                           <FaUserCircle className="text-3xl border h-[60px]" />
                         </Button>
+
+                          
+                        )
+                      }
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem>
-                          <Link href="/account" className="flex justify-center items-center gap-3">
+                          <Link href="/patient-profile" className="flex justify-center items-center gap-3">
                             <FaUser  />
                             My Account
                           </Link>
@@ -138,7 +149,7 @@ export default function Navbar({ isHeroSectionVisible, session }) {
                             }}
                           >
                             <button type="submit" className="flex justify-center items-center gap-3">
-                              <FaRoute/> Logout
+                              <CiLogout/> Logout
                             </button>
                           </form>
                         </DropdownMenuItem>
@@ -155,24 +166,30 @@ export default function Navbar({ isHeroSectionVisible, session }) {
                     </SheetTrigger>
                     <SheetContent side="right" className="w-64 bg-white shadow-lg p-5">
                       <div className="space-y-3">
-                        <Link href="/" className="nav-item text-[#6CA0D1] block">
+                        <Link href="/" className="flex justify-start items-center gap-4 nav-item text-[black]">
+                        <FaHome />
                           Home
                         </Link>
-                        <Link href="/doctors" className="nav-item text-black block">
+                        <Link href="/doctors" className="flex justify-start items-center gap-4 nav-item text-black">
+                        <FaUserDoctor />
                           Doctors
                         </Link>
-                        <Link href="/about" className="nav-item text-black block">
+                        <Link href="/about" className="flex justify-start items-center gap-4 nav-item text-black">
+                        <FaUserCircle />
                           About Us
                         </Link>
-                        <Link href="/contact" className="nav-item text-black block">
+                        <Link href="/contact" className="flex justify-start items-center gap-4 nav-item text-black">
+                        <MdContactSupport  />
                           Contact Us
                         </Link>
                         {session ? (
                           <>
-                            <Link href="/account" className="nav-item text-black block">
+                            <Link href="/patient-profile" className="flex justify-start items-center gap-4 nav-item text-black">
+                            <FaUserCircle />
                               My Account
                             </Link>
-                            <Link href="/doctors" className="nav-item text-black block">
+                            <Link href="/doctors" className="flex justify-start items-center gap-4 nav-item text-black">
+                            <MdOutlineEventAvailable  />
                               My Appointments
                             </Link>
                             <form
@@ -181,7 +198,7 @@ export default function Navbar({ isHeroSectionVisible, session }) {
                                 await signOut();
                               }}
                             >
-                              <button><FaRoute/> Logout</button>
+                              <button className="flex justify-center items-center gap-4" type="submit"><CiLogout /> Logout</button>
                             </form>
                           </>
                         ) : (

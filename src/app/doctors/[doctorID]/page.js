@@ -3,6 +3,7 @@ import { Star, Phone, Mail, MapPin, Clock } from "lucide-react";
 import Navbar from "@/Components/NavBar";
 import Footer from "@/Components/Footer";
 import {Calendar} from "../../../Components/ui/calendar"
+import WebPageLayout from "@/Components/WebPageLayout";
 export default function DoctorDetailPage({ params }) {
   const doctors = [
     {
@@ -190,8 +191,7 @@ export default function DoctorDetailPage({ params }) {
   console.log(params, "params of doctor id");
   let doctor = doctors.filter((doctor) => doctor.id == params.doctorID)[0];
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar isheroSectionVisible={false} />
+    <WebPageLayout isheroSectionVisible={false}>
       {/* Hero Section */}
       <section className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-8 sm:py-12 sm:px-6 lg:px-8">
@@ -323,7 +323,6 @@ export default function DoctorDetailPage({ params }) {
           Book Appointment
         </button>
       </div>
-      <Footer />
-    </div>
+    </WebPageLayout>
   );
 }

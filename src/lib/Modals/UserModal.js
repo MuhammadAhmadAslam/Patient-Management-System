@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 let UserSchema = new Schema({
-  firstName: String,
-  lastName: String,
-  email: String,
-  address: String,
-  phoneNumber: String,
-  gender: String,
+  "firstName": String,
+  "lastName": String,
+  "email": {type: String , unique: true},
+  "address": String,
+  "phoneNumber": {type: String , unqiue: true},
+  "gender": String,
   role: { type: String, default: "user", enum: ["user", "admin", "doctor"] },
 });
 

@@ -12,12 +12,14 @@ let RequestSchema = new mongoose.Schema({
     enum: ["male", "female", "other", "prefer-not-to-say"],
   },
   address: String,
-  specialty: String,
+  doctorId: {type: String , ref: "Users"},
+  specialty : String,
   experience: String,
   license: String,
   appointmentStart: String,
   appointmentEnd: String,
   bio: String,
+  Status: {type: String, enum: ["pending", "approved", "rejected"]},
   availability: [{}],
 });
 

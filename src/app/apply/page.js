@@ -33,7 +33,7 @@ export default async function DoctorApplicationsForm() {
         <main className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg shadow-lg border border-[#207DFF] overflow-hidden">
             <div className="p-8">
-             <DoctorApplicationForm />
+             <DoctorApplicationForm session={session}/>
             </div>
           </div>
         </main>

@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "./ui/button";
@@ -16,7 +17,8 @@ import { signOut } from "auth";
 import { FaBars, FaCalendar, FaHome, FaRoute, FaUser, FaUserCircle } from "react-icons/fa";
 import { MdContactSupport } from "react-icons/md";
 import { CiLogout } from "react-icons/ci";
-export default function Navbar({ isHeroSectionVisible, session }) {
+import { SignOutUser } from "@/actions/SignOut";
+export default async function Navbar({ isHeroSectionVisible, session }) {
   return (
     <section className="relative">
       <Header />
@@ -70,13 +72,13 @@ export default function Navbar({ isHeroSectionVisible, session }) {
                     session && (
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <div variant="ghost">
+                      <Button variant="ghost">
                         {session?.user?.image ? (
-                          <img src={session?.user?.image} alt={session?.user?.name} className="h-9 border border-black rounded-full" />
+                          <img src={session?.user?.image} alt={session?.user?.name} className="h-9  border border-black rounded-full" />
                         ) : (
                           <FaUserCircle className="text-3xl border h-[60px]" />
                         )}
-                      </div>
+                      </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem>
@@ -93,10 +95,7 @@ export default function Navbar({ isHeroSectionVisible, session }) {
                       </DropdownMenuItem>
                       <DropdownMenuItem>
                         <form
-                          action={async () => {
-                            "use server";
-                            await signOut();
-                          }}
+                          action={SignOutUser}
                         >
                           <button type="submit" className="flex justify-center items-center gap-3">
                             <CiLogout/> Logout
@@ -143,10 +142,7 @@ export default function Navbar({ isHeroSectionVisible, session }) {
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                           <form
-                            action={async () => {
-                              "use server";
-                              await signOut();
-                            }}
+                            action={SignOutUser}
                           >
                             <button type="submit" className="flex justify-center items-center gap-3">
                               <CiLogout/> Logout
@@ -193,10 +189,7 @@ export default function Navbar({ isHeroSectionVisible, session }) {
                               My Appointments
                             </Link>
                             <form
-                              action={async () => {
-                                "use server";
-                                await signOut();
-                              }}
+                              action={SignOutUser}
                             >
                               <button className="flex justify-center items-center gap-4" type="submit"><CiLogout /> Logout</button>
                             </form>

@@ -62,6 +62,11 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+                <li key={"Apply Doctor"}>
+                  <Link href="/doctors/apply" className="text-[#207DFF] cursor-pointer hover:text-primary">
+                    → Apply As Doctor
+                  </Link>
+                </li>
             </ul>
           </div>
 

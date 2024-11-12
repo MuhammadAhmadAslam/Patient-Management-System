@@ -353,7 +353,8 @@ import {
   SelectValue,
 } from "@/Components/ui/select";
 import { Checkbox } from "@/Components/ui/checkbox";
-import { uploadImage } from "@/actions/Upload";
+// import { uploadImage } from "@/actions/Upload";
+import { useState } from "react";
 // import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
@@ -374,8 +375,7 @@ const formSchema = z.object({
 });
 
 export default function DoctorForm({ session }) {
-
-  
+  let [profilePicture, setProfilePicture] = useState(null);
   // const { toast } = useToast();
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -386,15 +386,65 @@ export default function DoctorForm({ session }) {
     },
   });
 
+   async function uploadImage(doctorForm) {
+    const cloudName = process.env.CLOUD_NAME;
+    const apiKey = process.env.CLOUDINARY_API_KEY;
+    const apiSecret = process.env.CLOUDINARY_API_SECRET;
+         console.log("upload image");
+         
+    const timestamp = Math.floor(Date.now() / 1000);
+    const signature = generateSignature(timestamp, apiSecret);
+  
+    const formData = new FormData();
+    formData.append("file", doctorForm.profilePictures);
+  
+    formData.append("api_key", apiKey);
+    formData.append("timestamp", timestamp);
+    formData.append("signature", signature);
+  
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+  
+    const data = await response.json();
+  
+    if (response.ok) {
+      console.log("data=>", data.secure_url);
+      return data.secure_url;
+    } else {
+      console.log("error=>", data.error.message);
+      return data.error.message;
+    }
+  }
+  
+  function generateSignature(timestamp, apiSecret) {
+    const crypto = require("crypto");
+    const signature = crypto
+      .createHash("sha256")
+      .update(`timestamp=${timestamp}${apiSecret}`)
+      .digest("hex");
+    return signature;
+  }
+
   async function onSubmit(values) {
     console.log(values);
-    const file = values.profilePicture[0]; // Ensure this is an actual file object
-    console.log(file);
+    if (!profilePicture) {
+      alert("Please select a profile picture");
+      return;
+    }
 
-    if (file) {
-      await uploadImage(file);
-    } else {
-      console.error("No file selected");
+    try {
+      let obj = {...values , profilePictures: profilePicture}
+      console.log(obj , "obj");
+      
+      const url = await uploadImage(obj);
+      console.log("Uploaded image URL:", url);
+    } catch (error) {
+      console.error("Error uploading image:", error);
     }
   }
 
@@ -545,7 +595,7 @@ export default function DoctorForm({ session }) {
             )}
           />
 
-          <FormField
+          {/* <FormField
             name="profilePicture"
             control={form.control}
             render={({ field }) => (
@@ -557,13 +607,16 @@ export default function DoctorForm({ session }) {
                   <Input
                     {...field}
                     type="file"
-                    accept="image/*"
                     className="mt-1 text-[#212529] bg-[#F5F5F5] border border-[#212529]"
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
+          /> */}
+          <input
+            type="file"
+            onChange={(e) => setProfilePicture(e.target.files[0])}
           />
         </div>
 

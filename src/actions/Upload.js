@@ -10,7 +10,7 @@ export async function uploadImage(doctorForm) {
   const signature = generateSignature(timestamp, apiSecret);
 
   const formData = new FormData();
-  formData.append("file", doctorForm);
+  formData.append("file", doctorForm.profilePictures);
 
   formData.append("api_key", apiKey);
   formData.append("timestamp", timestamp);

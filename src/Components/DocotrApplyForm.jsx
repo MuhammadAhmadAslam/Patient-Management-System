@@ -334,7 +334,7 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/Components/ui/button";
 import {
   Form,
   FormControl,
@@ -342,17 +342,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/Components/ui/form";
+import { Input } from "@/Components/ui/input";
+import { Textarea } from "@/Components/ui/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
+} from "@/Components/ui/select";
+import { Checkbox } from "@/Components/ui/checkbox";
 import { uploadImage } from "@/actions/Upload";
 // import { useToast } from "@/hooks/use-toast";
 

@@ -355,22 +355,24 @@ import {
 import { Checkbox } from "@/Components/ui/checkbox";
 // import { uploadImage } from "@/actions/Upload";
 import { useState } from "react";
+import { handleRequestFromFrontEnd } from "@/actions/Requests";
+import Swal from "sweetalert2";
 // import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
-  name: z.string().min(2, "Name is required"),
+  firstName: z.string().min(3, "Name is required"),
   email: z.string().email("Invalid email address"),
   fees: z.string(),
-  gender: z.string().optional(),
-  appointmentStartTime: z.string(),
-  appointmentEndTime: z.string(),
+  gender: z.string(),
+  appointmentStart: z.string(),
+  appointmentEnd: z.string(),
   degree: z.string(),
-  specialization: z.string(),
+  speciality: z.string(),
   experience: z.string(),
-  number: z.string().regex(/^\d+$/, "Enter a valid phone number"),
+  phone: z.string().regex(/^\d+$/, "Enter a valid phone number"),
   address: z.string().min(5),
-  bio: z.string().min(2).max(120),
-  daysAvailable: z.array(z.string()).optional(),
+  bio: z.string().min(20).max(120),
+  daysAvailable: z.array(z.string()),
   profilePicture: z.any().optional(),
 });
 
@@ -386,66 +388,82 @@ export default function DoctorForm({ session }) {
     },
   });
 
-   async function uploadImage(doctorForm) {
-    const cloudName = process.env.CLOUD_NAME;
-    const apiKey = process.env.CLOUDINARY_API_KEY;
-    const apiSecret = process.env.CLOUDINARY_API_SECRET;
-         console.log("upload image");
+  //  async function uploadImage(doctorForm) {
+  //   const cloudName = process.env.CLOUD_NAME;
+  //   const apiKey = process.env.CLOUDINARY_API_KEY;
+  //   const apiSecret = process.env.CLOUDINARY_API_SECRET;
+  //        console.log("upload image");
          
-    const timestamp = Math.floor(Date.now() / 1000);
-    const signature = generateSignature(timestamp, apiSecret);
+  //   const timestamp = Math.floor(Date.now() / 1000);
+  //   const signature = generateSignature(timestamp, apiSecret);
   
-    const formData = new FormData();
-    formData.append("file", doctorForm.profilePictures);
+  //   const formData = new FormData();
+  //   formData.append("file", doctorForm.profilePictures);
   
-    formData.append("api_key", apiKey);
-    formData.append("timestamp", timestamp);
-    formData.append("signature", signature);
+  //   formData.append("api_key", apiKey);
+  //   formData.append("timestamp", timestamp);
+  //   formData.append("signature", signature);
   
-    const response = await fetch(
-      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
+  //   const response = await fetch(
+  //     `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+  //     {
+  //       method: "POST",
+  //       body: formData,
+  //     }
+  //   );
   
-    const data = await response.json();
+  //   const data = await response.json();
   
-    if (response.ok) {
-      console.log("data=>", data.secure_url);
-      return data.secure_url;
-    } else {
-      console.log("error=>", data.error.message);
-      return data.error.message;
-    }
-  }
+  //   if (response.ok) {
+  //     console.log("data=>", data.secure_url);
+  //     return data.secure_url;
+  //   } else {
+  //     console.log("error=>", data.error.message);
+  //     return data.error.message;
+  //   }
+  // }
   
-  function generateSignature(timestamp, apiSecret) {
-    const crypto = require("crypto");
-    const signature = crypto
-      .createHash("sha256")
-      .update(`timestamp=${timestamp}${apiSecret}`)
-      .digest("hex");
-    return signature;
-  }
+  // function generateSignature(timestamp, apiSecret) {
+  //   const crypto = require("crypto");
+  //   const signature = crypto
+  //     .createHash("sha256")
+  //     .update(`timestamp=${timestamp}${apiSecret}`)
+  //     .digest("hex");
+  //   return signature;
+  // }
 
   async function onSubmit(values) {
     console.log(values);
-    if (!profilePicture) {
-      alert("Please select a profile picture");
-      return;
-    }
+    const response = await handleRequestFromFrontEnd(values);
 
-    try {
-      let obj = {...values , profilePictures: profilePicture}
-      console.log(obj , "obj");
-      
-      const url = await uploadImage(obj);
-      console.log("Uploaded image URL:", url);
-    } catch (error) {
-      console.error("Error uploading image:", error);
+    if (response.success) {
+      Swal.fire({
+        title: "Success",
+        text: response.message,
+        icon: "success",
+      });
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: response.message,
+        icon: "error",
+      });
     }
+    
+    // if (!profilePicture) {
+    //   alert("Please select a profile picture");
+    //   return;
+    // }
+
+    // try {
+    //   let obj = {...values , profilePictures: profilePicture}
+    //   console.log(obj , "obj");
+      
+    //   const url = await uploadImage(obj);
+    //   console.log("Uploaded image URL:", url);
+    // } catch (error) {
+    //   console.error("Error uploading image:", error);
+    // }
   }
 
   return (
@@ -454,24 +472,24 @@ export default function DoctorForm({ session }) {
         <div className="grid grid-cols-1 m-2 lg:grid-cols-2 gap-5">
           {[
             {
-              name: "name",
+              name: "firstName",
               label: "Doctor Name",
               placeholder: "Enter Doctor's name",
             },
             { name: "fees", label: "Fees", placeholder: "Enter fees" },
             {
-              name: "appointmentStartTime",
+              name: "appointmentStart",
               label: "Appointment Start Time",
               type: "time",
             },
             {
-              name: "appointmentEndTime",
+              name: "appointmentEnd",
               label: "Appointment End Time",
               type: "time",
             },
             { name: "degree", label: "Degree", placeholder: "Enter degree" },
             {
-              name: "specialization",
+              name: "speciality",
               label: "Specialization",
               placeholder: "Enter specialization",
             },
@@ -481,7 +499,7 @@ export default function DoctorForm({ session }) {
               placeholder: "Enter years of experience",
             },
             {
-              name: "number",
+              name: "phone",
               label: "Contact Number",
               placeholder: "Enter contact number",
             },
@@ -544,10 +562,10 @@ export default function DoctorForm({ session }) {
                     <SelectValue placeholder="Select gender" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="male">Male</SelectItem>
-                    <SelectItem value="female">Female</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                    <SelectItem value="prefer-not-to-say">
+                    <SelectItem value="Male">Male</SelectItem>
+                    <SelectItem value="Female">Female</SelectItem>
+                    <SelectItem value="Tther">Other</SelectItem>
+                    <SelectItem value="Prefer-Not-To-Say">
                       Prefer not to say
                     </SelectItem>
                   </SelectContent>

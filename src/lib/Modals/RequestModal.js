@@ -3,25 +3,29 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 let RequestSchema = new mongoose.Schema({
-  firstName: String,
-  lastName: String,
+  firstName: {type : String , required: true},
   email: String,
-  phone: String,
+  phone: {type : String , required: true},
   gender: {
-    Type: String,
-    enum: ["male", "female", "other", "prefer-not-to-say"],
+    type: String,
+    enum: ["Male", "Female", "Other", "Prefer-Not-To-Say"],
+    required: true,
   },
   address: String,
-  doctorId: {type: String , ref: "Users"},
-  specialty : String,
+  RequestedUserId: {type: String , ref: "Users" , required: true},
+  speciality : String,
   experience: String,
   license: String,
   appointmentStart: String,
   appointmentEnd: String,
-  bio: String,
-  Status: {type: String, enum: ["pending", "approved", "rejected"]},
-  availability: [{}],
+  bio: {type: String},
+  Status: {type: String, enum: ["Pending", "Approved", "Rejected"]},
+  daysAvailable: [{}],
 });
 
+if (mongoose.models.Requests) {
+  console.log('schema update')
+  mongoose.models.Requests.schema = RequestSchema;
+}
 export let RequestModal =
   mongoose.models.Requests || mongoose.model("Requests", RequestSchema);

@@ -12,12 +12,12 @@ export async function uploadImage(doctorForm) {
   const formData = new FormData();
   formData.append("file", doctorForm.profilePictures);
 
-  formData.append("api_key", apiKey);
+  formData.append("api_key", process.env.CLOUDINARY_API_KEY);
   formData.append("timestamp", timestamp);
   formData.append("signature", signature);
 
   const response = await fetch(
-    `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+    `https://api.cloudinary.com/v1_1/${process.env.CLOUD_NAME}/image/upload`,
     {
       method: "POST",
       body: formData,

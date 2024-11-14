@@ -1,21 +1,8 @@
-"use client"
-
-import * as React from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Bell, ChevronDown, Home, Search, Settings, User, Users, Calendar, FileText } from "lucide-react"
-
-import { cn } from "@/lib/utils"
-import { Button } from "@/Components/ui/button"
-import { Input } from "@/Components/ui/input"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/Components/ui/dropdown-menu"
+import Link from "next/link";
+import { Bell, ChevronDown, Home, User, Users, Calendar, FileText } from "lucide-react";
+import { MdPendingActions } from "react-icons/md";
+import { cn } from "@/lib/utils";
+import { Button } from "@/Components/ui/button";
 import {
   Sidebar,
   SidebarContent,
@@ -26,8 +13,7 @@ import {
   SidebarMenuButton,
   SidebarProvider,
   SidebarTrigger,
-} from "@/Components/ui/sidebar"
-import { MdPending } from "react-icons/md"
+} from "@/Components/ui/sidebar";
 
 const sidebarItems = [
   { icon: Home, label: "Dashboard", href: "/admin" },
@@ -35,29 +21,27 @@ const sidebarItems = [
   { icon: User, label: "Doctors", href: "/admin/doctors" },
   { icon: Calendar, label: "Appointments", href: "/admin/appointments" },
   { icon: FileText, label: "Reports", href: "/admin/reports" },
-  { icon: MdPending, label: "Pending Requests", href: "/admin/PendingRequests" },
-]
+  { icon: MdPendingActions, label: "Requests", href: "/admin/requests" },
+];
 
-export function AdminLayout({ children }) {
-  const pathname = usePathname()
-
+export async function AdminLayout({ children }) {
   return (
+    // Wrapping the layout with SidebarProvider
     <SidebarProvider>
       <div className="flex h-screen w-full overflow-hidden">
         <Sidebar className="border-r-0">
-          <SidebarHeader className="bg-[#FAA0A0] text-white p-4">
+          <SidebarHeader className="bg-[#207DFF] text-white p-4">
             <h1 className="text-2xl font-bold">PMS Admin</h1>
           </SidebarHeader>
-          <SidebarContent className="bg-[#FAA0A0]">
+          <SidebarContent className="bg-[#207DFF]">
             <SidebarMenu>
               {sidebarItems.map((item) => (
                 <SidebarMenuItem key={item.href}>
-                  <SidebarMenuButton asChild isActive={pathname === item.href}>
+                  <SidebarMenuButton asChild>
                     <Link
                       href={item.href}
                       className={cn(
-                        "flex items-center gap-3 rounded-lg px-3 py-2 text-white transition-colors hover:bg-white/10",
-                        pathname === item.href ? "bg-white/20" : "transparent"
+                        "flex items-center gap-3 rounded-lg px-3 py-2 text-white transition-colors hover:bg-white/10"
                       )}
                     >
                       <item.icon className="h-5 w-5" />
@@ -81,27 +65,15 @@ export function AdminLayout({ children }) {
               <Button variant="ghost" size="icon">
                 <Bell className="h-5 w-5" />
               </Button>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center gap-2">
-                    <User className="h-5 w-5" />
-                    <span>John Doe</span>
-                    <ChevronDown className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Settings</DropdownMenuItem>
-                  <DropdownMenuItem>Log out</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <div className="flex items-center gap-2">
+                <User className="h-5 w-5" />
+                <span>John Doe</span>
+              </div>
             </div>
           </header>
           <main className="flex-1 overflow-y-auto bg-white p-6">{children}</main>
         </div>
       </div>
     </SidebarProvider>
-  )
+  );
 }

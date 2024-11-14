@@ -23,9 +23,9 @@ let RequestSchema = new mongoose.Schema({
   daysAvailable: [{}],
 });
 
-if (mongoose.models.Requests) {
+if (mongoose.models.requests) {
   console.log('schema update')
-  mongoose.models.Requests.schema = RequestSchema;
+  mongoose.models.requests.schema = RequestSchema;
 }
 export let RequestModal =
-  mongoose.models.Requests || mongoose.model("Requests", RequestSchema);
+  mongoose.models.requests || mongoose.model("requests", RequestSchema);

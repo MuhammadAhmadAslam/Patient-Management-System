@@ -20,36 +20,40 @@ import {
   SheetDescription,
   SheetTrigger,
 } from "@/Components/ui/sheet";
-import { useSearchParams , usePathname , useRouter } from "next/navigation";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { getRequest } from "@/actions/Requests";
+import { handleApprove, handleReject } from "@/actions/ApproveRequest";
 
-function Request({status , requests}) {
+function Request({ status, requests, isLoading }) {
   // State to store pending doctors
   const [pendingDoctors, setPendingDoctors] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [filter, setFilter] = useState("All"); // State to manage selected filter
+  console.log(requests, "doctor requests for map in component");
 
   let searchParams = useSearchParams();
   const pathname = usePathname()
-  const {replace} = useRouter()
+  const { replace } = useRouter()
 
   useEffect(() => {
-    
+
     let params = new URLSearchParams();
-    if(filter){
-      params.set("status" , filter)
-    }else{
+    if (filter) {
+      params.set("status", filter)
+    } else {
       params.delete("status")
     }
-    console.log(filter , "filter");
-    
-    console.log(params , "params");
+    console.log(filter, "filter");
+
+    console.log(params, "params");
     replace(`${pathname}?${params.toString()}`);
+    getRequest(filter);
   }, [filter]);
   // Fetch pending doctor requests data on component mount
 
-console.log(requests , "request in request component");
+  console.log(requests, "request in request component");
 
- 
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   return (
     <div className="space-y-6">
@@ -58,41 +62,37 @@ console.log(requests , "request in request component");
         <h1 className="text-3xl font-bold">Doctor Requests</h1>
         <div className="space-x-4">
           <Button
-            className={`${
-              filter === "All"
+            className={`${filter === "All"
                 ? "bg-[#207DFF]"
                 : "bg-transparent text-[#207DFF]"
-            } hover:bg-[bg-[#207DFF]]`}
+              } hover:bg-[bg-[#207DFF]]`}
             onClick={() => setFilter("All")}
           >
             All
           </Button>
           <Button
-            className={`${
-              filter === "Pending"
+            className={`${filter === "Pending"
                 ? "bg-[#207DFF]"
                 : "bg-transparent text-[#207DFF]"
-            } hover:bg-[bg-[#207DFF]]`}
+              } hover:bg-[bg-[#207DFF]]`}
             onClick={() => setFilter("Pending")}
           >
             Pending
           </Button>
           <Button
-            className={`${
-              filter === "Approved"
+            className={`${filter === "Approved"
                 ? "bg-[#207DFF]"
                 : "bg-transparent text-[#207DFF]"
-            } hover:bg-[bg-[#207DFF]]`}
+              } hover:bg-[bg-[#207DFF]]`}
             onClick={() => setFilter("Approved")}
           >
             Approved
           </Button>
           <Button
-            className={`${
-              filter === "Rejected"
+            className={`${filter === "Rejected"
                 ? "bg-[#207DFF]"
                 : "bg-transparent text-[#207DFF]"
-            } hover:bg-[bg-[#207DFF]]`}
+              } hover:bg-[bg-[#207DFF]]`}
             onClick={() => setFilter("Rejected")}
           >
             Rejected
@@ -103,7 +103,7 @@ console.log(requests , "request in request component");
       {/* Badge with Pending Count */}
       <div className="flex items-center justify-between">
         <Badge variant="secondary" className="text-lg px-3 py-1">
-           Requests
+          Requests
         </Badge>
       </div>
 
@@ -124,7 +124,7 @@ console.log(requests , "request in request component");
               </TableRow>
             </TableHeader>
             <TableBody>
-              {/* {requests.map((doctor) => (
+              {requests.map((doctor) => (
                 <TableRow key={doctor.id}>
                   <TableCell className="font-medium">
                     {doctor.firstName}
@@ -135,18 +135,18 @@ console.log(requests , "request in request component");
                     <Badge
                       variant="secondary"
                       className={
-                        doctor.status === "Pending"
+                        doctor.Status === "Pending"
                           ? "bg-[#FAA0A0] text-white"
-                          : doctor.status === "Approved"
-                          ? "bg-[#4CAF50] text-white"
-                          : "bg-[#FF6347] text-white"
+                          : doctor.Status === "Approved"
+                            ? "bg-[#4CAF50] text-white"
+                            : "bg-[#FF6347] text-white"
                       }
                     >
-                      {doctor.status}
+                      {doctor.Status}
                     </Badge>
                   </TableCell>
                   <TableCell>
-                    <Sheet>
+                    <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
                       <SheetTrigger asChild>
                         <Button
                           variant="outline"
@@ -162,33 +162,136 @@ console.log(requests , "request in request component");
                         <SheetHeader>
                           <SheetTitle>Doctor Request Details</SheetTitle>
                           <SheetDescription>
-                            Review and approve or reject the doctor's
-                            application.
+                            Review the doctor's application and decide whether to approve or reject.
                           </SheetDescription>
                         </SheetHeader>
+
                         {selectedDoctor && (
-                          <div className="space-y-4 mt-4">
-                            <p>
-                              <strong>Name:</strong> {selectedDoctor.firstName}{" "}
-                              {selectedDoctor.lastName}
-                            </p>
-                            <p>
-                              <strong>Specialty:</strong>{" "}
-                              {selectedDoctor.speciality}
-                            </p>
-                            <p>
-                              <strong>Gender:</strong> {selectedDoctor.gender}
-                            </p>
-                            <p>
-                              <strong>Status:</strong> {selectedDoctor.status}
-                            </p>
+                          <div className="space-y-6 mt-6">
+                            {/* Doctor Info */}
+                            <div className="border border-gray-200 rounded-lg p-4 shadow-md">
+                              <h2 className="text-lg font-semibold text-gray-800">
+                                Personal Information
+                              </h2>
+                              <div className="mt-2 space-y-2">
+                                <p>
+                                  <strong className="text-gray-600">Name:</strong>{" "}
+                                  {selectedDoctor.firstName} {selectedDoctor.lastName}
+                                </p>
+                                <p>
+                                  <strong className="text-gray-600">Email:</strong>{" "}
+                                  {selectedDoctor.email}
+                                </p>
+                                <p>
+                                  <strong className="text-gray-600">Phone:</strong>{" "}
+                                  {selectedDoctor.phone}
+                                </p>
+                                <p>
+                                  <strong className="text-gray-600">Gender:</strong>{" "}
+                                  {selectedDoctor.gender}
+                                </p>
+                                <p>
+                                  <strong className="text-gray-600">Address:</strong>{" "}
+                                  {selectedDoctor.address}
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Professional Info */}
+                            <div className="border border-gray-200 rounded-lg p-4 shadow-md">
+                              <h2 className="text-lg font-semibold text-gray-800">
+                                Professional Information
+                              </h2>
+                              <div className="mt-2 space-y-2">
+                                <p>
+                                  <strong className="text-gray-600">Specialty:</strong>{" "}
+                                  {selectedDoctor.specialty}
+                                </p>
+                                <p>
+                                  <strong className="text-gray-600">Experience:</strong>{" "}
+                                  {selectedDoctor.experience} years
+                                </p>
+                                <p>
+                                  <strong className="text-gray-600">Bio:</strong>{" "}
+                                  {selectedDoctor.bio}
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Appointment Info */}
+                            <div className="border border-gray-200 rounded-lg p-4 shadow-md">
+                              <h2 className="text-lg font-semibold text-gray-800">
+                                Appointment Details
+                              </h2>
+                              <div className="mt-2 space-y-2">
+                                <p>
+                                  <strong className="text-gray-600">Start Time:</strong>{" "}
+                                  {selectedDoctor.appointmentStart}
+                                </p>
+                                <p>
+                                  <strong className="text-gray-600">End Time:</strong>{" "}
+                                  {selectedDoctor.appointmentEnd}
+                                </p>
+                                <p>
+                                  <strong className="text-gray-600">Days Available:</strong>{" "}
+                                  {selectedDoctor.daysAvailable.length > 0
+                                    ? selectedDoctor.daysAvailable.join(", ")
+                                    : "Not specified"}
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Request Status */}
+                            <div className="flex items-center justify-between mt-4">
+                              <Badge
+                                variant="secondary"
+                                className={`${selectedDoctor.Status === "Pending"
+                                    ? "bg-yellow-500 text-white"
+                                    : selectedDoctor.Status === "Approved"
+                                      ? "bg-green-500 text-white"
+                                      : "bg-red-500 text-white"
+                                  } px-4 py-2 text-sm rounded-full`}
+                              >
+                                {selectedDoctor.Status}
+                              </Badge>
+                  
+                            </div>
+                            {
+                              selectedDoctor.Status === "Pending" && (
+                                <div className="flex items-center justify-between mt-4">
+                                  <Button
+                                  className="w-full mr-2"
+                                    variant="outline"
+                                    onClick={() => { 
+                                      setIsSheetOpen(false); 
+                                      handleApprove(selectedDoctor)
+                                    }
+                                    }
+                                  >
+                                    Approve
+                                  </Button>
+                                  <Button
+                                  className="w-full mr-2"
+                                    variant="destructive"
+                                    onClick={() => { 
+                                      setIsSheetOpen(false); 
+                                      handleReject(selectedDoctor)
+                                    }
+                                    }
+                                  >
+                                    Reject
+                                  </Button>
+                                </div>
+                              )
+                            }
                           </div>
                         )}
                       </SheetContent>
                     </Sheet>
+
                   </TableCell>
                 </TableRow>
-              ))} */}
+              ))}
             </TableBody>
           </Table>
         </CardContent>

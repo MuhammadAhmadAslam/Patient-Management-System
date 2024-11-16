@@ -32,7 +32,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
     },
     async jwt({ token }) {
-      console.log(token , 'tokien in jwt');
       let userFromDB = await handleLogin(token)
       token.role = userFromDB.role
       token._id = userFromDB._id

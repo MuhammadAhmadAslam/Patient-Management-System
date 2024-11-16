@@ -43,6 +43,12 @@ export async function handleRequestFromFrontEnd(request) {
 
 
 export async function getRequest(status){
+  console.log(status , "status in get request");
+  
+  console.log("request sended in backend");
+  
   let request = await fetch(`${process.env.BASE_URL}api/requests?status=${status ? status : ""}`);
-  return request.json();
+  request = await request.json();
+  console.log(await request , "request sended in backend");
+  return request;
 }

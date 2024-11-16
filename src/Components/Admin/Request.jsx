@@ -162,7 +162,7 @@ function Request({ status, requests, isLoading }) {
                         <SheetHeader>
                           <SheetTitle>Doctor Request Details</SheetTitle>
                           <SheetDescription>
-                            Review the doctor's application and decide whether to approve or reject.
+                            Review the doctors application and decide whether to approve or reject.
                           </SheetDescription>
                         </SheetHeader>
 

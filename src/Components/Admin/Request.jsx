@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import { Eye } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { Eye } from "lucide-react";
 import { Badge } from "@/Components/ui/badge";
 import { Button } from "@/Components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
@@ -20,39 +20,36 @@ import {
   SheetDescription,
   SheetTrigger,
 } from "@/Components/ui/sheet";
+import { useSearchParams , usePathname , useRouter } from "next/navigation";
 
-function Request() {
+function Request({status , requests}) {
   // State to store pending doctors
   const [pendingDoctors, setPendingDoctors] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [filter, setFilter] = useState("All"); // State to manage selected filter
 
-  // Fetch pending doctor requests data on component mount
+  let searchParams = useSearchParams();
+  const pathname = usePathname()
+  const {replace} = useRouter()
+
   useEffect(() => {
-    const fetchPendingDoctors = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/requests`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const data = await response.json();
-        setPendingDoctors(data);
-      } catch (error) {
-        console.error('Error fetching pending doctors:', error);
-      }
-    };
+    
+    let params = new URLSearchParams();
+    if(filter){
+      params.set("status" , filter)
+    }else{
+      params.delete("status")
+    }
+    console.log(filter , "filter");
+    
+    console.log(params , "params");
+    replace(`${pathname}?${params.toString()}`);
+  }, [filter]);
+  // Fetch pending doctor requests data on component mount
 
-    fetchPendingDoctors();
-  }, []);
+console.log(requests , "request in request component");
 
-  // Function to filter the list of doctors based on selected filter
-  const filteredDoctors = pendingDoctors.filter((doctor) => {
-    if (filter === "All") return true;
-    if (filter === "Pending") return doctor.Status === "Pending";
-    if (filter === "Approved") return doctor.Status === "Approved";
-    if (filter === "Rejected") return doctor.Status === "Rejected";
-    return true;
-  });
+ 
 
   return (
     <div className="space-y-6">
@@ -61,25 +58,41 @@ function Request() {
         <h1 className="text-3xl font-bold">Doctor Requests</h1>
         <div className="space-x-4">
           <Button
-            className={`${filter === "All" ? "bg-[#207DFF]" : "bg-transparent text-[#207DFF]"} hover:bg-[bg-[#207DFF]]`}
+            className={`${
+              filter === "All"
+                ? "bg-[#207DFF]"
+                : "bg-transparent text-[#207DFF]"
+            } hover:bg-[bg-[#207DFF]]`}
             onClick={() => setFilter("All")}
           >
             All
           </Button>
           <Button
-            className={`${filter === "Pending" ? "bg-[#207DFF]" : "bg-transparent text-[#207DFF]"} hover:bg-[bg-[#207DFF]]`}
+            className={`${
+              filter === "Pending"
+                ? "bg-[#207DFF]"
+                : "bg-transparent text-[#207DFF]"
+            } hover:bg-[bg-[#207DFF]]`}
             onClick={() => setFilter("Pending")}
           >
             Pending
           </Button>
           <Button
-            className={`${filter === "Approved" ? "bg-[#207DFF]" : "bg-transparent text-[#207DFF]"} hover:bg-[bg-[#207DFF]]`}
+            className={`${
+              filter === "Approved"
+                ? "bg-[#207DFF]"
+                : "bg-transparent text-[#207DFF]"
+            } hover:bg-[bg-[#207DFF]]`}
             onClick={() => setFilter("Approved")}
           >
             Approved
           </Button>
           <Button
-            className={`${filter === "Rejected" ? "bg-[#207DFF]" : "bg-transparent text-[#207DFF]"} hover:bg-[bg-[#207DFF]]`}
+            className={`${
+              filter === "Rejected"
+                ? "bg-[#207DFF]"
+                : "bg-transparent text-[#207DFF]"
+            } hover:bg-[bg-[#207DFF]]`}
             onClick={() => setFilter("Rejected")}
           >
             Rejected
@@ -90,7 +103,7 @@ function Request() {
       {/* Badge with Pending Count */}
       <div className="flex items-center justify-between">
         <Badge variant="secondary" className="text-lg px-3 py-1">
-          {filteredDoctors.length} {filter} Requests
+           Requests
         </Badge>
       </div>
 
@@ -111,9 +124,11 @@ function Request() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredDoctors.map((doctor) => (
+              {/* {requests.map((doctor) => (
                 <TableRow key={doctor.id}>
-                  <TableCell className="font-medium">{doctor.firstName}</TableCell>
+                  <TableCell className="font-medium">
+                    {doctor.firstName}
+                  </TableCell>
                   <TableCell>{doctor.speciality}</TableCell>
                   <TableCell>{doctor.gender}</TableCell>
                   <TableCell>
@@ -147,16 +162,19 @@ function Request() {
                         <SheetHeader>
                           <SheetTitle>Doctor Request Details</SheetTitle>
                           <SheetDescription>
-                            Review and approve or reject the doctor's application.
+                            Review and approve or reject the doctor's
+                            application.
                           </SheetDescription>
                         </SheetHeader>
                         {selectedDoctor && (
                           <div className="space-y-4 mt-4">
                             <p>
-                              <strong>Name:</strong> {selectedDoctor.firstName} {selectedDoctor.lastName}
+                              <strong>Name:</strong> {selectedDoctor.firstName}{" "}
+                              {selectedDoctor.lastName}
                             </p>
                             <p>
-                              <strong>Specialty:</strong> {selectedDoctor.speciality}
+                              <strong>Specialty:</strong>{" "}
+                              {selectedDoctor.speciality}
                             </p>
                             <p>
                               <strong>Gender:</strong> {selectedDoctor.gender}
@@ -170,7 +188,7 @@ function Request() {
                     </Sheet>
                   </TableCell>
                 </TableRow>
-              ))}
+              ))} */}
             </TableBody>
           </Table>
         </CardContent>
@@ -178,8 +196,6 @@ function Request() {
     </div>
   );
 }
-
-
 
 // export async function getServerSideProps() {
 //   try {

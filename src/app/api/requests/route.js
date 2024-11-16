@@ -1,9 +1,16 @@
 import connectDB from "@/lib/DataBase/connectDB";
 import { RequestModal } from "@/lib/Modals/RequestModal";
 
-export async function GET() {
+export async function GET(req) {
   await connectDB();
-  let requests = await RequestModal.find();
+  const status = req.nextUrl.searchParams.get("status")
+  const query = {}
+  if (status && status != "All") {
+    query.status = status;
+  }
+  console.log(status , "status search params in backend");
+  
+  let requests = await RequestModal.find(query);
   return Response.json(requests);
 }
 

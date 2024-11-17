@@ -124,7 +124,7 @@ function Request({ status, requests, isLoading }) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {requests.map((doctor) => (
+              {requests ? requests.map((doctor) => (
                 <TableRow key={doctor.id}>
                   <TableCell className="font-medium">
                     {doctor.firstName}
@@ -285,13 +285,19 @@ function Request({ status, requests, isLoading }) {
                               )
                             }
                           </div>
+                         
                         )}
                       </SheetContent>
                     </Sheet>
 
                   </TableCell>
                 </TableRow>
-              ))}
+              )
+              
+              )
+                :
+                <h1>No Request To Show</h1>
+              }
             </TableBody>
           </Table>
         </CardContent>

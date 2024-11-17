@@ -8,3 +8,5 @@ export async function getDoctors() {
     res = res.json()
     return res
 }
+
+

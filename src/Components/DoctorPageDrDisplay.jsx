@@ -206,16 +206,16 @@ function DoctorPageDrDisplay({doctors}) {
           All Doctors Available Here
         </h1>
         <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-          {/* <select
+          <select
             name="doctors"
             className="border border-gray-300 rounded-lg px-4 py-2 w-full sm:w-auto focus:outline-none focus:border-blue-500 transition"
           >
-            {doctors?.map((category, index) => (
-              <option key={index} value={category}>
-                {category}
+            {doctors?.map((doctor, index) => (
+              <option key={index} value={doctor.speciality}>
+                {doctor.speciality}
               </option>
             ))}
-          </select> */}
+          </select>
           <SearchInput />
         </div>
       </div>

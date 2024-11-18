@@ -96,7 +96,7 @@ export default async function DoctorDetailPage({ params }) {
           </div>
   
           {/* Appointment Booking Section */}
-         <AppointmentBooking />
+         <AppointmentBooking doctorID={params.doctorID} daysAvailable={doctor.daysAvailable} />
         </div>
       </div>
     </section>

@@ -6,6 +6,7 @@ import {Calendar} from "../../../Components/ui/calendar"
 import WebPageLayout from "@/Components/WebPageLayout";
 import { getSingleDoctor } from "@/actions/getDoctors";
 import AppointmentBooking from "@/Components/BookAppointment";
+import { auth } from "auth";
 export default async function DoctorDetailPage({ params }) {
  
   async function getSingleDoctor(doctorID) {
@@ -26,6 +27,10 @@ export default async function DoctorDetailPage({ params }) {
       return null; 
     }
   }
+
+  let session = await auth()
+  console.log(session , "session in page.js/[doctorId]");
+  
   
 
   console.log(params, "params of doctor id");
@@ -96,7 +101,7 @@ export default async function DoctorDetailPage({ params }) {
           </div>
   
           {/* Appointment Booking Section */}
-         <AppointmentBooking doctorID={params.doctorID} daysAvailable={doctor.daysAvailable} />
+         <AppointmentBooking doctorID={params.doctorID} availableDays={doctor.daysAvailable} userSession={session}/>
         </div>
       </div>
     </section>

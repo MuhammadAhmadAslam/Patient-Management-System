@@ -48,6 +48,9 @@ export default async function Navbar({ isHeroSectionVisible, session }) {
                   <Link href="/doctors" className="nav-item text-black text-sm hover:text-[#207DFF] transition-colors">
                     Doctors
                   </Link>
+                  <Link href="/myAppointments" className="nav-item text-black text-sm hover:text-[#207DFF] transition-colors">
+                    My Appointments
+                  </Link>
                   <Link href="/about" className="nav-item text-black text-sm hover:text-[#207DFF] transition-colors">
                     About Us
                   </Link>
@@ -82,7 +85,7 @@ export default async function Navbar({ isHeroSectionVisible, session }) {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem>
-                        <Link href="/patient-profile" className="flex justify-center items-center gap-3">
+                        <Link href={`${session.user.role != "admin" ? "/patient-profile" : "/admin"}`} className="flex justify-center items-center gap-3">
                           <FaUser  />
                           My Account
                         </Link>

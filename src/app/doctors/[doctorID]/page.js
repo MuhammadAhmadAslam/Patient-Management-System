@@ -55,7 +55,7 @@ export default async function DoctorDetailPage({ params }) {
           </div>
           <div className="mt-4 md:mt-0 md:ml-6">
             <h1 className="text-2xl sm:text-3xl font-bold text-[#207DFF]">
-              {doctor.name}
+              {doctor.firstName}
             </h1>
             <p className="mt-1 text-lg sm:text-xl text-gray-600">
               {doctor.speciality}
@@ -101,7 +101,7 @@ export default async function DoctorDetailPage({ params }) {
           </div>
   
           {/* Appointment Booking Section */}
-         <AppointmentBooking doctorID={params.doctorID} availableDays={doctor.daysAvailable} userSession={session}/>
+         <AppointmentBooking doctorID={params.doctorID} availableDays={doctor.daysAvailable} userSession={session} appointmentStart={doctor.appointmentStart} appointmentEnd={doctor.appointmentEnd}/>
         </div>
       </div>
     </section>

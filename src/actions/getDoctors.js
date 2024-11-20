@@ -2,7 +2,7 @@
 
 
 export async function getDoctors() {
-    let res = await fetch(`${process.env.BASE_URL}api/doctor`, {
+    let res = await fetch(`${process.env.BASE_URL}api/requests?status=Approved`, {
         cache: "no-cache",
     })
     res = res.json()
@@ -10,7 +10,7 @@ export async function getDoctors() {
 }
 
 export async function getSingleDoctor(id) {
-    let res = await fetch(`${process.env.BASE_URL}api/doctor/${id}`, {
+    let res = await fetch(`${process.env.BASE_URL}api/request/${id}`, {
         cache: "no-cache",
     })
     res = res.json()

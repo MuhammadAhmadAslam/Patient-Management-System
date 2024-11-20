@@ -18,6 +18,8 @@ let UserSchema = new Schema({
       status: { type: String, enum: ["scheduled", "completed", "canceled"], default: "scheduled" }
     }
   ]
+},{
+  strictPopulate: false,
 });
 
 export const userModal = mongoose.models.Users || mongoose.model("Users", UserSchema);

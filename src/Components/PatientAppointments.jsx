@@ -1,155 +1,120 @@
-// "use client";
-// import React, { useState } from "react";
+"use client";
 
-// const PatientAppointments = ({currentPatientAppointments}) => {
-//   const [appointments, setAppointments] = useState([
-//     {
-//       id: 1,
-//       doctorName: "Dr. Jane Doe",
-//       specialty: "Cardiologist",
-//       date: "2024-11-20",
-//       time: "10:00 AM",
-//       status: "Pending",
-//     },
-//     {
-//       id: 2,
-//       doctorName: "Dr. John Smith",
-//       specialty: "Dermatologist",
-//       date: "2024-11-18",
-//       time: "2:00 PM",
-//       status: "Accepted",
-//     },
-//     {
-//       id: 3,
-//       doctorName: "Dr. Emily Clark",
-//       specialty: "Pediatrician",
-//       date: "2024-11-15",
-//       time: "11:00 AM",
-//       status: "Cancelled",
-//     },
-//   ]);
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Calendar, Clock, MapPin } from "lucide-react";
+import { Check, XCircle, Eye } from "lucide-react"; // Icons for admin actions
+import { AdminAppointmentHandling } from "@/actions/appointmentHandling";
 
-//   const [filter, setFilter] = useState("all");
-//   const [search, setSearch] = useState("");
-
-//   const handleFilterChange = (e) => {
-//     setFilter(e.target.value);
-//   };
-
-//   const handleSearchChange = (e) => {
-//     setSearch(e.target.value.toLowerCase());
-//   };
-
-//   const filteredAppointments = currentPatientAppointments.filter((appointment) => {
-//     const matchesFilter =
-//       filter === "all" || appointment.status.toLowerCase() === filter;
-//     const matchesSearch =
-//       appointment.doctorName.toLowerCase().includes(search) ||
-//       appointment.specialty.toLowerCase().includes(search);
-//     return matchesFilter && matchesSearch;
-//   });
-
-//   return (
-//     <div className="bg-[#E1E1E1] min-h-screen p-6">
-//       {/* Header */}
-//       <div className="header text-center py-4 bg-white shadow-md rounded-lg mb-6">
-//         <h1 className="text-3xl pb-4 font-bold text-[#207DFF]">My Appointments</h1>
-//         <p className="text-gray-500 ">
-//           Track and manage all your appointments here.
-//         </p>
-//       </div>
-
-//       {/* Filter Bar */}
-//       <div className="filter-bar bg-white p-4 rounded-lg shadow-md flex flex-wrap gap-4 items-center justify-between mb-6">
-//         <input
-//           type="text"
-//           placeholder="Search by Doctor or Specialty"
-//           value={search}
-//           onChange={handleSearchChange}
-//           className="border border-gray-300 rounded-lg p-2 flex-1"
-//         />
-//         <select
-//           value={filter}
-//           onChange={handleFilterChange}
-//           className="border border-gray-300 rounded-lg p-2"
-//         >
-//           <option value="all">All Status</option>
-//           <option value="pending">Pending</option>
-//           <option value="accepted">Accepted</option>
-//           <option value="cancelled">Cancelled</option>
-//         </select>
-//       </div>
-
-//       {/* Appointment Cards */}
-//       <div className="appointment-list grid gap-4">
-//         {filteredAppointments.length > 0 ? (
-//           filteredAppointments.map((appointment) => (
-//             <div
-//               key={appointment.id}
-//               className="appointment-card bg-white shadow-md p-4 rounded-lg flex justify-between  flex-col"
-//             >
-//               <div className="info space-y-2 flex justify-start flex-col">
-//                 <h2 className="text-lg font-bold text-black">
-//                   {appointment.doctorName}
-//                 </h2>
-//                 <p className="text-gray-600">{appointment.specialty}</p>
-//                 <p className="text-[#207DFF]">
-//                   {appointment.date}, {appointment.time}
-//                 </p>
-//                 <span
-//                   className={`badge px-2 w-[120px] text-center py-1 rounded-full text-white ${
-//                     appointment.status === "Pending"
-//                       ? "bg-yellow-400"
-//                       : appointment.status === "Accepted"
-//                       ? "bg-green-500"
-//                       : "bg-[#F87171]"
-//                   }`}
-//                 >
-//                   {appointment.status}
-//                 </span>
-//               </div>
-//               <div className="actions flex space-x-4 justify-end flex-wrap mt-6 gap-2">
-//                 <button className="bg-[#F87171] text-white px-4 py-2 rounded-lg hover:bg-red-500">
-//                   Get Prescription
-//                 </button>
-//                 {appointment.status === "Pending" && (
-//                   <button className="border border-black text-black px-4 py-2 rounded-lg hover:bg-gray-200">
-//                     Cancel Appointment
-//                   </button>
-//                 )}
-//               </div>
-//             </div>
-//           ))
-//         ) : (
-//           <p className="text-center text-gray-500">
-//             No appointments found for your selected filters.
-//           </p>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default PatientAppointments;
-"use client"
-
-import React, { useState } from "react";
-
-const PatientAppointments = ({ currentPatientAppointments }) => {
-
+const PatientAppointments = ({ appointments, isAdmin }) => {
   return (
-    <>
-    <h1>My Appointments</h1>
-    <ul>
-      {
-        currentPatientAppointments.map((appointment) => (
-          <li key={appointment.id}>
-              {appointment.request.firstName}
-          </li>
-        ))
-      }
-    </ul>
-    </>
+    <div className="flex-1 space-y-6">
+      {appointments.map((appointment) => (
+        <Card key={appointment._id} className="bg-white">
+          <CardHeader>
+            <CardTitle className="text-xl text-black">
+              DR. {appointment.request.firstName}
+            </CardTitle>
+            <CardDescription>{appointment.request.speciality}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
+              <Calendar className="h-4 w-4" />
+              <span>{appointment.appointmentDate.toDateString()}</span>
+              <Clock className="h-4 w-4 ml-4" />
+              <span>{appointment.request.appointmentStart}</span>
+            </div>
+            <div className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
+              <MapPin className="h-4 w-4" />
+              <span>My Clinic</span>
+            </div>
+            {isAdmin && (
+              <div className="mt-4 p-2 bg-gray-100 rounded-md">
+                <p className="text-sm font-medium text-gray-800">
+                  Patient Details:
+                </p>
+                <p className="text-sm text-gray-600">
+                  <span className="font-semibold">Name:</span>{" "}
+                  {appointment.user.firstName} {appointment.user.lastName}
+                </p>
+                <p className="text-sm text-gray-600">
+                  <span className="font-semibold">Email:</span>{" "}
+                  {appointment.user.email}
+                </p>
+                <p className="text-sm text-gray-600">
+                  <span className="font-semibold">Phone:</span>{" "}
+                  {appointment.user.phone || "N/A"}
+                </p>
+              </div>
+            )}
+          </CardContent>
+          <CardFooter className="flex justify-between items-center">
+            <span
+              className={`text-sm font-semibold ${
+                appointment.status === "Upcoming"
+                  ? "text-[#207DFF]"
+                  : "text-[#F87171]"
+              }`}
+            >
+              {appointment.status}
+            </span>
+            <div className="flex justify-center items-center gap-5">
+              {isAdmin ? (
+                // Admin view: Icons instead of buttons
+                <>
+                  {appointment.status === "Pending" && (
+                    <Check
+                      className="h-5 w-5 text-green-500 cursor-pointer"
+                      title="Accept"
+                      onClick={() =>
+                        AdminAppointmentHandling(appointment._id, "Accepted")
+                      }
+                    />
+                  )}
+                  <XCircle
+                    className="h-5 w-5 text-red-500 cursor-pointer"
+                    title="Cancel"
+                    onClick={() =>
+                      AdminAppointmentHandling(appointment._id, "Cancelled")
+                    }
+                  />
+                  <Eye
+                    className="h-5 w-5 text-blue-500 cursor-pointer"
+                    title="View Details"
+                    onClick={() =>
+                      AdminAppointmentHandling(appointment._id, "Visited")
+                    }
+                  />
+                </>
+              ) : (
+                // Regular user view: Buttons
+                <>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={appointment.status !== "Pending"}
+                  >
+                    Reschedule
+                  </Button>
+                  {appointment.status === "Pending" && (
+                    <Button variant="destructive" size="sm">
+                      Cancel
+                    </Button>
+                  )}
+                </>
+              )}
+            </div>
+          </CardFooter>
+        </Card>
+      ))}
+    </div>
   );
 };
 

@@ -34,7 +34,7 @@ export default async function MyAppointments() {
             </div>
           ) : (
             <div className="flex flex-col md:flex-row gap-8">
-              <PatientAppointmentSideBar />
+              <PatientAppointmentSideBar session={session} appointments={findAppointments} />
               <PatientAppointments session={session} appointments={findAppointments} />
             </div>
           )

@@ -7,8 +7,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+} from "@/Components/ui/card";
+import { Button } from "@/Components/ui/button";
 import { Calendar, Clock, MapPin } from "lucide-react";
 import { Check, XCircle, Eye } from "lucide-react"; // Icons for admin actions
 import { AdminAppointmentHandling } from "@/actions/appointmentHandling";

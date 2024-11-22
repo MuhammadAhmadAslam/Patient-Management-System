@@ -4,7 +4,7 @@ import { Calendar } from "./ui/calendar";
 import { PostAppointments } from "@/actions/appointments";
 import Swal from "sweetalert2";
 
-const AppointmentBooking = ({ userSession, doctorID, availableDays,appointmentEnd , appointmentStart }) => {
+const AppointmentBooking = ({ userSession, doctorID, availableDays, appointmentEnd, appointmentStart }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -96,6 +96,23 @@ const AppointmentBooking = ({ userSession, doctorID, availableDays,appointmentEn
             {appointmentEnd}
           </button>
         </div>
+
+        <div className="mt-4">
+          <h3 className="text-lg text-gray-700 text-center">Doctor's Available Days:</h3>
+          <div className="flex justify-center items-center gap-2 mt-2">
+            {availableDays.map((day, index) => (
+              <span
+                key={index}
+                className="bg-gray-700 text-white px-4 py-2 rounded-md"
+              >
+                {day}
+              </span>
+            ))}
+          </div>
+        </div>
+
+
+
       </div>
       {selectedDate && (
         <div className="mt-4 text-center text-gray-700">
@@ -104,9 +121,8 @@ const AppointmentBooking = ({ userSession, doctorID, availableDays,appointmentEn
       )}
       {message && (
         <div
-          className={`mt-4 text-center ${
-            message.includes("successfully") ? "text-green-500" : "text-red-500"
-          }`}
+          className={`mt-4 text-center ${message.includes("successfully") ? "text-green-500" : "text-red-500"
+            }`}
         >
           {message}
         </div>
@@ -115,11 +131,10 @@ const AppointmentBooking = ({ userSession, doctorID, availableDays,appointmentEn
         <button
           onClick={handleBookAppointment}
           disabled={loading}
-          className={`w-full rounded-md px-4 py-3 text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 ${
-            loading
-              ? "bg-gray-400"
-              : "bg-[#F87171] hover:bg-red-500 focus:ring-red-500"
-          }`}
+          className={`w-full rounded-md px-4 py-3 text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 ${loading
+            ? "bg-gray-400"
+            : "bg-[#F87171] hover:bg-red-500 focus:ring-red-500"
+            }`}
         >
           {loading ? "Booking..." : "Book Appointment"}
         </button>

@@ -87,16 +87,20 @@ import Navbar from "@/Components/NavBar";
 import DoctorPageDrDisplay from "@/Components/DoctorPageDrDisplay";
 import Footer from "@/Components/Footer";
 import { auth } from "auth";
+import connectDB from "@/lib/DataBase/connectDB";
 
 
 
 export default async function DoctorsPage() {
   async function fetchDoctors() {
+    await connectDB()
     const res = await fetch(`${process.env.BASE_URL}api/requests?status=Approved`, {
       cache: "no-cache",
     });
   
     if (!res.ok) {
+      console.log(res , "this is response from the api");
+      
       throw new Error("Failed to fetch doctors");
     }
   

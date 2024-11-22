@@ -16,7 +16,7 @@ import { AdminAppointmentHandling } from "@/actions/appointmentHandling";
 const PatientAppointments = ({ appointments, isAdmin }) => {
   return (
     <div className="flex-1 space-y-6">
-      {appointments.map((appointment) => (
+      {appointments.length > 0 ? appointments.map((appointment) => (
         <Card key={appointment._id} className="bg-white">
           <CardHeader>
             <CardTitle className="text-xl text-black">
@@ -113,7 +113,13 @@ const PatientAppointments = ({ appointments, isAdmin }) => {
             </div>
           </CardFooter>
         </Card>
-      ))}
+      )) 
+    : (
+      <div className="flex justify-center items-center h-[40vh]">
+          <h1 className="text-2xl font-bold text-red">No Appointments Yet</h1>
+      </div>
+    )
+    }
     </div>
   );
 };

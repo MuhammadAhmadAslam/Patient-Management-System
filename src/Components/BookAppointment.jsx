@@ -98,7 +98,7 @@ const AppointmentBooking = ({ userSession, doctorID, availableDays, appointmentE
         </div>
 
         <div className="mt-4">
-          <h3 className="text-lg text-gray-700 text-center">Doctor's Available Days:</h3>
+          <h3 className="text-lg text-gray-700 text-center">Doctor{"'"}s Available Days:</h3>
           <div className="flex justify-center items-center gap-2 mt-2">
             {availableDays.map((day, index) => (
               <span

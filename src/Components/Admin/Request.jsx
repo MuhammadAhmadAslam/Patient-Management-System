@@ -24,7 +24,7 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { getRequest } from "@/actions/Requests";
 import { handleApprove, handleReject } from "@/actions/ApproveRequest";
 
-function Request({ status, requests, isLoading }) {
+function Request({ status, requests, isLoading, isDoctor }) {
   // State to store pending doctors
   const [pendingDoctors, setPendingDoctors] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
@@ -58,59 +58,67 @@ function Request({ status, requests, isLoading }) {
   return (
     <div className="space-y-6">
       {/* Filter Buttons */}
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Doctor Requests</h1>
-        <div className="space-x-4">
-          <Button
-            className={`${filter === "All"
-                ? "bg-[#207DFF]"
-                : "bg-transparent text-[#207DFF]"
-              } hover:bg-[bg-[#207DFF]]`}
-            onClick={() => setFilter("All")}
-          >
-            All
-          </Button>
-          <Button
-            className={`${filter === "Pending"
-                ? "bg-[#207DFF]"
-                : "bg-transparent text-[#207DFF]"
-              } hover:bg-[bg-[#207DFF]]`}
-            onClick={() => setFilter("Pending")}
-          >
-            Pending
-          </Button>
-          <Button
-            className={`${filter === "Approved"
-                ? "bg-[#207DFF]"
-                : "bg-transparent text-[#207DFF]"
-              } hover:bg-[bg-[#207DFF]]`}
-            onClick={() => setFilter("Approved")}
-          >
-            Approved
-          </Button>
-          <Button
-            className={`${filter === "Rejected"
-                ? "bg-[#207DFF]"
-                : "bg-transparent text-[#207DFF]"
-              } hover:bg-[bg-[#207DFF]]`}
-            onClick={() => setFilter("Rejected")}
-          >
-            Rejected
-          </Button>
-        </div>
-      </div>
+      {
+        !isDoctor && (
+          <div className="flex items-center justify-between">
+            <div className="space-x-4">
+              <Button
+                className={`${filter === "All"
+                  ? "bg-[#207DFF]"
+                  : "bg-transparent text-[#207DFF]"
+                  } hover:bg-[bg-[#207DFF]]`}
+                onClick={() => setFilter("All")}
+              >
+                All
+              </Button>
+              <Button
+                className={`${filter === "Pending"
+                  ? "bg-[#207DFF]"
+                  : "bg-transparent text-[#207DFF]"
+                  } hover:bg-[bg-[#207DFF]]`}
+                onClick={() => setFilter("Pending")}
+              >
+                Pending
+              </Button>
+              <Button
+                className={`${filter === "Approved"
+                  ? "bg-[#207DFF]"
+                  : "bg-transparent text-[#207DFF]"
+                  } hover:bg-[bg-[#207DFF]]`}
+                onClick={() => setFilter("Approved")}
+              >
+                Approved
+              </Button>
+              <Button
+                className={`${filter === "Rejected"
+                  ? "bg-[#207DFF]"
+                  : "bg-transparent text-[#207DFF]"
+                  } hover:bg-[bg-[#207DFF]]`}
+                onClick={() => setFilter("Rejected")}
+              >
+                Rejected
+              </Button>
+            </div>
+          </div>
+        )
+      }
 
       {/* Badge with Pending Count */}
-      <div className="flex items-center justify-between">
-        <Badge variant="secondary" className="text-lg px-3 py-1">
-          Requests
-        </Badge>
-      </div>
+      {
+        !isDoctor && (
+          <div className="flex items-center justify-between">
+            <Badge variant="secondary" className="text-lg px-3 py-1">
+              Requests
+            </Badge>
+          </div>
+
+        )
+      }
 
       {/* Table with Filtered Doctors */}
       <Card className="bg-white">
         <CardHeader>
-          <CardTitle>Doctor Requests</CardTitle>
+          <CardTitle>{!isDoctor ? "Doctors Requests" : "Doctors" }</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
@@ -246,24 +254,23 @@ function Request({ status, requests, isLoading }) {
                               <Badge
                                 variant="secondary"
                                 className={`${selectedDoctor.Status === "Pending"
-                                    ? "bg-yellow-500 text-white"
-                                    : selectedDoctor.Status === "Approved"
-                                      ? "bg-green-500 text-white"
-                                      : "bg-red-500 text-white"
+                                  ? "bg-yellow-500 text-white"
+                                  : selectedDoctor.Status === "Approved"
+                                    ? "bg-green-500 text-white"
+                                    : "bg-red-500 text-white"
                                   } px-4 py-2 text-sm rounded-full`}
                               >
                                 {selectedDoctor.Status}
                               </Badge>
-                  
                             </div>
                             {
                               selectedDoctor.Status === "Pending" && (
                                 <div className="flex items-center justify-between mt-4">
                                   <Button
-                                  className="w-full mr-2"
+                                    className="w-full mr-2"
                                     variant="outline"
-                                    onClick={() => { 
-                                      setIsSheetOpen(false); 
+                                    onClick={() => {
+                                      setIsSheetOpen(false);
                                       handleApprove(selectedDoctor)
                                     }
                                     }
@@ -271,10 +278,10 @@ function Request({ status, requests, isLoading }) {
                                     Approve
                                   </Button>
                                   <Button
-                                  className="w-full mr-2"
+                                    className="w-full mr-2"
                                     variant="destructive"
-                                    onClick={() => { 
-                                      setIsSheetOpen(false); 
+                                    onClick={() => {
+                                      setIsSheetOpen(false);
                                       handleReject(selectedDoctor)
                                     }
                                     }
@@ -285,7 +292,7 @@ function Request({ status, requests, isLoading }) {
                               )
                             }
                           </div>
-                         
+
                         )}
                       </SheetContent>
                     </Sheet>
@@ -293,7 +300,7 @@ function Request({ status, requests, isLoading }) {
                   </TableCell>
                 </TableRow>
               )
-              
+
               )
                 :
                 <h1>No Request To Show</h1>

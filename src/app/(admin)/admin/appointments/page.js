@@ -37,39 +37,18 @@
 //   );
 // }
 
+import { fetchAppointmentsAndSession } from "@/actions/appointmentHandling";
 import PatientAppointments from "@/Components/PatientAppointments";
 import PatientAppointmentSideBar from "@/Components/PatientAppointmentSideBar";
 import { AppointmentModal } from "@/lib/Modals/AppointmentModal";
 import { auth } from "auth";
 
 // This function will run on the server side during the request and fetch necessary data
-export async function getServerSideProps() {
-    let session;
-    try {
-        let fetchSession = await auth();
-        session = fetchSession;
-    } catch (e) {
-        console.log(e, "Error fetching session");
-        session = null;  // Handle error scenario gracefully
-    }
 
-    // Fetch appointments and populate related fields
-    let findAppointments = await AppointmentModal.find()
-        .populate("request", "appointmentEnd appointmentStart firstName") // Populate 'request' field
-        .populate("user", "email lastName firstName") // Populate 'user' field
-        .lean(); // Make sure to return a plain JavaScript object
-
-    // Return fetched data as props to be used in the page component
-    return {
-        props: {
-            session,
-            appointments: findAppointments || [], // Handle the case where there are no appointments
-        },
-    };
-}
 
 // Page component that receives props from `getServerSideProps`
-export default function AdminAppointments({ session, appointments }) {
+export default function AdminAppointments() {
+  const { session, appointments } = fetchAppointmentsAndSession();
     return (
         <div>
             <h1>Admin Appointments</h1>

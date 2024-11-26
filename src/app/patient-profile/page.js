@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 import { Button } from "@/Components/ui/button";
@@ -8,17 +9,28 @@ import WebPageLayout from "@/Components/WebPageLayout";
 import { auth } from "auth";
 import { redirect } from "next/dist/server/api-utils";
 
-export default async function ProfilePage() {
-  let session;
+export async function getServerSideProps(context) {
   try {
-    session = await auth();
-    console.log(session, "session in profile page");
+    const session = await auth();
     if (!session) {
-      redirect("/");
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
     }
+    return {
+      props: { session }, // Pass session data to the component
+    };
   } catch (error) {
     console.error("Error fetching session:", error);
+    return {
+      props: { session: null }, // Handle the error gracefully
+    };
   }
+}
+export default async function ProfilePage() {
 
   return (
     <WebPageLayout isHeroSectionVisible={false}>

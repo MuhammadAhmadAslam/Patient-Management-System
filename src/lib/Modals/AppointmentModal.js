@@ -47,7 +47,7 @@ const { Schema } = mongoose;
 const appointmentSchema = new Schema(
   {
     user: { type: mongoose.Types.ObjectId, ref: "Users" },
-    request: { type: mongoose.Types.ObjectId, ref: "Requests" },
+    request: { type: mongoose.Types.ObjectId, ref: "requests" },
     date: Date,
     status: {
       type: String,

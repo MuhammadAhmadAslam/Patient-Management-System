@@ -14,6 +14,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/Components/ui/sidebar";
+import { auth } from "auth";
 
 const sidebarItems = [
   { icon: Home, label: "Dashboard", href: "/admin" },
@@ -25,6 +26,8 @@ const sidebarItems = [
 ];
 
 export async function AdminLayout({ children }) {
+
+  let session = await auth()
   return (
     // Wrapping the layout with SidebarProvider
     <SidebarProvider>
@@ -67,7 +70,7 @@ export async function AdminLayout({ children }) {
               </Button>
               <div className="flex items-center gap-2">
                 <User className="h-5 w-5" />
-                <span>John Doe</span>
+                <span>{session.user.name}</span>
               </div>
             </div>
           </header>

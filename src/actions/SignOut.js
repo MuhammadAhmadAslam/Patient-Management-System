@@ -12,7 +12,7 @@ export async function getSession() {
        let session;
        try {
               let fetchSession = await auth();
-              session = fetchSession;
+              return fetchSession;
        } catch (e) {
               console.log(e, "error agyaa");
        }

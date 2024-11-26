@@ -8,7 +8,8 @@ import { auth } from "auth";
 export default async function MyAppointments() {
  
   let session = await getSession()
-
+  console.log(session , "session in myAppointments");
+  
   // Fetch appointments and populate the 'request' and 'user' fields
   let findAppointments = await AppointmentModal.find({ user: session?.user?._id })
     .populate("request", "appointmentEnd appointmentStart firstName ")  // Populate the 'request' field

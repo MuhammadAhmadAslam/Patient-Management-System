@@ -1,6 +1,7 @@
 "use server"
 import connectDB from "@/lib/DataBase/connectDB";
 import { AppointmentModal } from "@/lib/Modals/AppointmentModal";
+import { auth } from "auth";
 
 export async function AdminAppointmentHandling(id , status){
        await connectDB()
